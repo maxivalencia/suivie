@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Traitements index{% endblock %}
+
+{% block body %}
+    <h1>Traitements index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Traitement</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for traitement in traitements %}
+            <tr>
+                <td>{{ traitement.id }}</td>
+                <td>{{ traitement.traitement }}</td>
+                <td>
+                    <a href="{{ path('traitements_show', {'id': traitement.id}) }}">show</a>
+                    <a href="{{ path('traitements_edit', {'id': traitement.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('traitements_new') }}">Create new</a>
+{% endblock %}

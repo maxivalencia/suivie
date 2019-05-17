@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeDossiers{% endblock %}
+
+{% block body %}
+    <h1>TypeDossiers</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_dossier.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ type_dossier.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('type_dossiers_index') }}">back to list</a>
+
+    <a href="{{ path('type_dossiers_edit', {'id': type_dossier.id}) }}">edit</a>
+
+    {{ include('type_dossiers/_delete_form.html.twig') }}
+{% endblock %}

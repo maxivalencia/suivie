@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Dossiers{% endblock %}
+
+{% block body %}
+    <h1>Create new Dossiers</h1>
+
+    {{ include('dossiers/_form.html.twig') }}
+
+    <a href="{{ path('dossiers_index') }}">back to list</a>
+{% endblock %}

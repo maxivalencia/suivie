@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Dossiers{% endblock %}
+
+{% block body %}
+    <h1>Edit Dossiers</h1>
+
+    {{ include('dossiers/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('dossiers_index') }}">back to list</a>
+
+    {{ include('dossiers/_delete_form.html.twig') }}
+{% endblock %}

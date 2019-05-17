@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dossiers{% endblock %}
+
+{% block body %}
+    <h1>Dossiers</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dossier.id }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ dossier.reference }}</td>
+            </tr>
+            <tr>
+                <th>Objet</th>
+                <td>{{ dossier.objet }}</td>
+            </tr>
+            <tr>
+                <th>Dateexpedition</th>
+                <td>{{ dossier.dateexpedition ? dossier.dateexpedition|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Daterecepnumeric</th>
+                <td>{{ dossier.daterecepnumeric ? dossier.daterecepnumeric|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Daterecepeffectif</th>
+                <td>{{ dossier.daterecepeffectif ? dossier.daterecepeffectif|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Referencesuivie</th>
+                <td>{{ dossier.referencesuivie }}</td>
+            </tr>
+            <tr>
+                <th>Dureetraitement</th>
+                <td>{{ dossier.dureetraitement }}</td>
+            </tr>
+            <tr>
+                <th>Dureeeffectif</th>
+                <td>{{ dossier.dureeeffectif }}</td>
+            </tr>
+            <tr>
+                <th>Suggestions</th>
+                <td>{{ dossier.suggestions }}</td>
+            </tr>
+            <tr>
+                <th>Piecejointes</th>
+                <td>{{ dossier.piecejointes }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('dossiers_index') }}">back to list</a>
+
+    <a href="{{ path('dossiers_edit', {'id': dossier.id}) }}">edit</a>
+
+    {{ include('dossiers/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dossiers index{% endblock %}
+
+{% block body %}
+    <h1>Dossiers index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Objet</th>
+                <th>Dateexpedition</th>
+                <th>Daterecepnumeric</th>
+                <th>Daterecepeffectif</th>
+                <th>Referencesuivie</th>
+                <th>Dureetraitement</th>
+                <th>Dureeeffectif</th>
+                <th>Suggestions</th>
+                <th>Piecejointes</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dossier in dossiers %}
+            <tr>
+                <td>{{ dossier.id }}</td>
+                <td>{{ dossier.reference }}</td>
+                <td>{{ dossier.objet }}</td>
+                <td>{{ dossier.dateexpedition ? dossier.dateexpedition|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ dossier.daterecepnumeric ? dossier.daterecepnumeric|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ dossier.daterecepeffectif ? dossier.daterecepeffectif|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ dossier.referencesuivie }}</td>
+                <td>{{ dossier.dureetraitement }}</td>
+                <td>{{ dossier.dureeeffectif }}</td>
+                <td>{{ dossier.suggestions }}</td>
+                <td>{{ dossier.piecejointes }}</td>
+                <td>
+                    <a href="{{ path('dossiers_show', {'id': dossier.id}) }}">show</a>
+                    <a href="{{ path('dossiers_edit', {'id': dossier.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('dossiers_new') }}">Create new</a>
+{% endblock %}
