@@ -64,10 +64,16 @@ class Unites
      */
     private $dossiers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="unite")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->unites = new ArrayCollection();
         $this->dossiers = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -215,6 +221,37 @@ class Unites
             // set the owning side to null (unless already changed)
             if ($dossier->getUniteorigine() === $this) {
                 $dossier->setUniteorigine(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setUnite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getUnite() === $this) {
+                $user->setUnite(null);
             }
         }
 
