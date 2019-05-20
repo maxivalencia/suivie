@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acceuil{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+            <!--img src="/dist/images/header.png" class="img-fluid" alt="Image en-tête de la DGSR"-->
+        </div>
+        <div class="col-9 col-md-9 col-lg-9 col-xl-9">
+            <div class="font-weight-normal justify-content-center align-items-center text-center" style="font-size:30px;">Direction Général de la sécurité routière</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+            <div class="vertical-menu">
+                <a href="#" class="active">Tableau de bord : {{ app.user.username }}</a>
+                <a href="#"> Dossiers </a>
+                <a href="#"> Statistique </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="#"> Historique </a>
+                    <a href="#"> Unité </a>
+                    <a href="#"> Type de dossiers </a>
+                    <a href="#"> Resultat </a>
+                    <a href="#"> Traitement </a>
+                    <a href="#"> Role </a>
+                    <a href="#"> Commune </a>                       
+                    <a href="#"> District </a>                         
+                    <a href="#"> Region </a>                        
+                    <a href="#"> Province </a>
+                {% endif %}
+                <!--<a href="{#{{ path('app_logout') }}#}"><span class="fa fa-sign-out"></span> Déconnexion</a>-->
+            </div>
+        </div>
+        <div class="col-9 col-md-9 col-lg-9 col-xl-9">
+            <div class="row">{% block contenue %}{% endblock %}</div>
+        </div>
+    </div>
+    <div>
+        
+    </div>
+</div>
+{% endblock %}

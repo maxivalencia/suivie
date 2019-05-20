@@ -1,35 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Provinces index{% endblock %}
 
-{% block body %}
-    <h1>Provinces index</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Liste des Provinces</h1>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Province</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for province in provinces %}
-            <tr>
-                <td>{{ province.id }}</td>
-                <td>{{ province.province }}</td>
-                <td>
-                    <a href="{{ path('provinces_show', {'id': province.id}) }}">show</a>
-                    <a href="{{ path('provinces_edit', {'id': province.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Province</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for province in provinces %}
+                <tr>
+                    <td>{{ province.id }}</td>
+                    <td>{{ province.province }}</td>
+                    <td>
+                        <a href="{{ path('provinces_show', {'id': province.id}) }}">Voir</a>
+                        <a href="{{ path('provinces_edit', {'id': province.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('provinces_new') }}">Create new</a>
+        <a href="{{ path('provinces_new') }}">Créer un province</a>
+    </div>
 {% endblock %}
