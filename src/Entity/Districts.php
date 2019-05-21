@@ -46,12 +46,12 @@ class Districts
 
     public function getDistrict(): ?string
     {
-        return $this->district;
+        return strtoupper($this->district);
     }
 
     public function setDistrict(string $district): self
     {
-        $this->district = $district;
+        $this->district = strtoupper($district);
 
         return $this;
     }
@@ -97,5 +97,14 @@ class Districts
         }
 
         return $this;
+    }
+
+    /**
+    * toString
+    * @return string
+    */
+    public function __toString()
+    {
+        return $this->getDistrict();
     }
 }

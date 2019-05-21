@@ -1,26 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Regions{% endblock %}
 
-{% block body %}
-    <h1>Regions</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Regions</h1>
+        </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ region.id }}</td>
-            </tr>
-            <tr>
-                <th>Region</th>
-                <td>{{ region.region }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('regions_index') }}">back to list</a>
-
-    <a href="{{ path('regions_edit', {'id': region.id}) }}">edit</a>
-
-    {{ include('regions/_delete_form.html.twig') }}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ region.id }}</td>
+                </tr>
+                <tr>
+                    <th>Region</th>
+                    <td>{{ region.region }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <a href="{{ path('regions_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
+        <a href="{{ path('regions_edit', {'id': region.id}) }}" class="btn btn-warning">Modifier</a>
+        <br><br>
+        {{ include('regions/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

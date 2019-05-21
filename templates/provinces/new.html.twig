@@ -5,10 +5,12 @@
 {% block contenue %}
     <div class="container">
         <div class="text-center">
-            <h1>Creation nouveau Provinces</h1>
+            <h1>Création nouveau Provinces</h1>
         </div>
-        {{ include('provinces/_form.html.twig') }}
+        <hr>
         
-        <a href="{{ path('provinces_index') }}">Retour vers la liste</a>
+        {{ include('provinces/_form.html.twig') }}
+        <br>
+        <a href="{{ path('provinces_index') }}" class="btn btn-primary">Retour</a>
     </div>
 {% endblock %}

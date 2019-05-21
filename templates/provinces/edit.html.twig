@@ -7,11 +7,11 @@
         <div class="text-center">
             <h1>Edition Provinces</h1>
         </div>
-
+        <br>
         {{ include('provinces/_form.html.twig', {'button_label': 'Modifier'}) }}
-
-        <a href="{{ path('provinces_index') }}">Retour vers la liste</a>
-
+        <br>
+        <a href="{{ path('provinces_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
         {{ include('provinces/_delete_form.html.twig') }}
     </div>
 {% endblock %}

@@ -1,13 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
-{% block title %}Edit Regions{% endblock %}
+{% block title %}Edition Regions{% endblock %}
 
-{% block body %}
-    <h1>Edit Regions</h1>
-
-    {{ include('regions/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('regions_index') }}">back to list</a>
-
-    {{ include('regions/_delete_form.html.twig') }}
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Edition Regions</h1>
+        </div>
+        <br>
+        {{ include('regions/_form.html.twig', {'button_label': 'Modifier'}) }}
+        <br>
+        <a href="{{ path('regions_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
+        {{ include('regions/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

@@ -257,4 +257,13 @@ class Unites
 
         return $this;
     }
+
+    /**
+    * toString
+    * @return string
+    */
+    public function __toString()
+    {
+        return $this->getUnite();
+    }
 }
