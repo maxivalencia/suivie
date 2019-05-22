@@ -1,35 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Resultats index{% endblock %}
 
-{% block body %}
-    <h1>Resultats index</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Liste des Resultats</h1>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Resultat</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for resultat in resultats %}
-            <tr>
-                <td>{{ resultat.id }}</td>
-                <td>{{ resultat.resultat }}</td>
-                <td>
-                    <a href="{{ path('resultats_show', {'id': resultat.id}) }}">show</a>
-                    <a href="{{ path('resultats_edit', {'id': resultat.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Resultat</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for resultat in resultats %}
+                <tr>
+                    <td>{{ resultat.id }}</td>
+                    <td>{{ resultat.resultat }}</td>
+                    <td>
+                        <a href="{{ path('resultats_show', {'id': resultat.id}) }}" class="btn btn-warning"><i class="fa fa-book" aria-hidden="true"></i></a>
+                        <a href="{{ path('resultats_edit', {'id': resultat.id}) }}" class="btn btn-danger"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('resultats_new') }}">Create new</a>
+        <a href="{{ path('resultats_new') }}" class="btn btn-success">Créer une résultat</a>
+    </div>
 {% endblock %}

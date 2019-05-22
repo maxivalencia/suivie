@@ -1,35 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}TypeDossiers index{% endblock %}
 
-{% block body %}
-    <h1>TypeDossiers index</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Liste des Types de Dossiers</h1>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for type_dossier in type_dossiers %}
-            <tr>
-                <td>{{ type_dossier.id }}</td>
-                <td>{{ type_dossier.type }}</td>
-                <td>
-                    <a href="{{ path('type_dossiers_show', {'id': type_dossier.id}) }}">show</a>
-                    <a href="{{ path('type_dossiers_edit', {'id': type_dossier.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Type</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for type_dossier in type_dossiers %}
+                <tr>
+                    <td>{{ type_dossier.id }}</td>
+                    <td>{{ type_dossier.type }}</td>
+                    <td>
+                        <a href="{{ path('type_dossiers_show', {'id': type_dossier.id}) }}" class="btn btn-warning"><i class="fa fa-book" aria-hidden="true"></i></a>
+                        <a href="{{ path('type_dossiers_edit', {'id': type_dossier.id}) }}" class="btn btn-danger"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('type_dossiers_new') }}">Create new</a>
+        <a href="{{ path('type_dossiers_new') }}" class="btn btn-success">Créer une région</a>
+    </div>
 {% endblock %}

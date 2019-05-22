@@ -1,11 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}New Resultats{% endblock %}
 
-{% block body %}
-    <h1>Create new Resultats</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Création nouveau Resultats</h1>
+        </div>                                                        
+        <hr>
 
-    {{ include('resultats/_form.html.twig') }}
-
-    <a href="{{ path('resultats_index') }}">back to list</a>
+        {{ include('resultats/_form.html.twig') }}
+        <br>
+        <a href="{{ path('resultats_index') }}" class="btn btn-primary">Retour</a>
+    </div>
 {% endblock %}

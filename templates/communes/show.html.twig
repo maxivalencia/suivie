@@ -1,26 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Communes{% endblock %}
 
-{% block body %}
-    <h1>Communes</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Communes</h1>
+        </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ commune.id }}</td>
-            </tr>
-            <tr>
-                <th>Commune</th>
-                <td>{{ commune.commune }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('communes_index') }}">back to list</a>
-
-    <a href="{{ path('communes_edit', {'id': commune.id}) }}">edit</a>
-
-    {{ include('communes/_delete_form.html.twig') }}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ commune.id }}</td>
+                </tr>
+                <tr>
+                    <th>Commune</th>
+                    <td>{{ commune.commune }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <a href="{{ path('communes_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
+        <a href="{{ path('communes_edit', {'id': commune.id}) }}" class="btn btn-warning">Modifier</a>
+        <br><br>
+        {{ include('communes/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

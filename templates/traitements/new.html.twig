@@ -1,11 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}New Traitements{% endblock %}
 
-{% block body %}
-    <h1>Create new Traitements</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Création nouveau Traitements</h1>
+        </div>
+        <hr>
 
-    {{ include('traitements/_form.html.twig') }}
-
-    <a href="{{ path('traitements_index') }}">back to list</a>
+        {{ include('traitements/_form.html.twig') }}
+        <br>
+        <a href="{{ path('traitements_index') }}" class="btn btn-primary">Retour</a>
+    </div>
 {% endblock %}

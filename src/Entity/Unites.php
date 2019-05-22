@@ -83,24 +83,24 @@ class Unites
 
     public function getUnite(): ?string
     {
-        return $this->unite;
+        return strtoupper($this->unite);
     }
 
     public function setUnite(string $unite): self
     {
-        $this->unite = $unite;
+        $this->unite = strtoupper($unite);
 
         return $this;
     }
 
     public function getAbreviation(): ?string
     {
-        return $this->abreviation;
+        return strtoupper($this->abreviation);
     }
 
     public function setAbreviation(string $abreviation): self
     {
-        $this->abreviation = $abreviation;
+        $this->abreviation = strtoupper($abreviation);
 
         return $this;
     }

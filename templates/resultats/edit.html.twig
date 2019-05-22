@@ -1,13 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Edit Resultats{% endblock %}
 
-{% block body %}
-    <h1>Edit Resultats</h1>
-
-    {{ include('resultats/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('resultats_index') }}">back to list</a>
-
-    {{ include('resultats/_delete_form.html.twig') }}
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Edition Resultats</h1>
+        </div>
+        <br>
+        {{ include('resultats/_form.html.twig', {'button_label': 'Modifier'}) }}
+        <br>
+        <a href="{{ path('resultats_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
+        {{ include('resultats/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

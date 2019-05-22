@@ -1,26 +1,30 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Districts{% endblock %}
 
-{% block body %}
-    <h1>Districts</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Districts</h1>
+        </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ district.id }}</td>
-            </tr>
-            <tr>
-                <th>District</th>
-                <td>{{ district.district }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('districts_index') }}">back to list</a>
-
-    <a href="{{ path('districts_edit', {'id': district.id}) }}">edit</a>
-
-    {{ include('districts/_delete_form.html.twig') }}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ district.id }}</td>
+                </tr>
+                <tr>
+                    <th>District</th>
+                    <td>{{ district.district }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <a href="{{ path('districts_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
+        <a href="{{ path('districts_edit', {'id': district.id}) }}" class="btn btn-warning">Modifier</a>
+        <br><br>
+        {{ include('districts/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

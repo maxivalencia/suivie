@@ -1,13 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Edit Districts{% endblock %}
 
-{% block body %}
-    <h1>Edit Districts</h1>
-
-    {{ include('districts/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('districts_index') }}">back to list</a>
-
-    {{ include('districts/_delete_form.html.twig') }}
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Edition Districts</h1>
+        </div>
+        <br>
+        {{ include('districts/_form.html.twig', {'button_label': 'Modifier'}) }}
+        <br>
+        <a href="{{ path('districts_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
+        {{ include('districts/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

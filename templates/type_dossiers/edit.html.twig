@@ -1,13 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Edit TypeDossiers{% endblock %}
 
-{% block body %}
-    <h1>Edit TypeDossiers</h1>
-
-    {{ include('type_dossiers/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('type_dossiers_index') }}">back to list</a>
-
-    {{ include('type_dossiers/_delete_form.html.twig') }}
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Edition Type de Dossiers</h1>
+        </div>
+        <br>
+        {{ include('type_dossiers/_form.html.twig', {'button_label': 'Modifier'}) }}
+        <br>
+        <a href="{{ path('type_dossiers_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
+        {{ include('type_dossiers/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

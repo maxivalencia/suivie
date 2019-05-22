@@ -1,35 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Communes index{% endblock %}
 
-{% block body %}
-    <h1>Communes index</h1>
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Liste des Communes</h1>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Commune</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for commune in communes %}
-            <tr>
-                <td>{{ commune.id }}</td>
-                <td>{{ commune.commune }}</td>
-                <td>
-                    <a href="{{ path('communes_show', {'id': commune.id}) }}">show</a>
-                    <a href="{{ path('communes_edit', {'id': commune.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Commune</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for commune in communes %}
+                <tr>
+                    <td>{{ commune.id }}</td>
+                    <td>{{ commune.commune }}</td>
+                    <td>
+                        <a href="{{ path('communes_show', {'id': commune.id}) }}" class="btn btn-warning"><i class="fa fa-book" aria-hidden="true"></i></a>
+                        <a href="{{ path('communes_edit', {'id': commune.id}) }}" class="btn btn-danger"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('communes_new') }}">Create new</a>
+        <a href="{{ path('communes_new') }}" class="btn btn-success">Créer un commune</a>
+    </div>
 {% endblock %}

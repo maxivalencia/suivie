@@ -21,13 +21,14 @@
                 <a href="#"> Statistique </a>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="#"> Historique </a>
-                    <a href="#"> Unité </a>
-                    <a href="#"> Type de dossiers </a>
-                    <a href="#"> Resultat </a>
-                    <a href="#"> Traitement </a>
-                    <a href="#"> Role </a>
-                    <a href="#"> Commune </a>                       
-                    <a href="#"> District </a>                         
+                    <a href="{{ path('user_index') }}"> Utilisateur </a>
+                    <a href="{{ path('unites_index') }}"> Unité </a>
+                    <a href="{{ path('type_dossiers_index') }}"> Type de dossiers </a>
+                    <a href="{{ path('resultats_index') }}"> Resultat </a>
+                    <a href="{{ path('traitements_index') }}"> Traitement </a>
+                    <!--a href="#"> Role </a-->
+                    <a href="{{ path('communes_index') }}"> Commune </a>                       
+                    <a href="{{ path('districts_index') }}"> District </a>                         
                     <a href="{{ path('regions_index') }}"> Region </a>                        
                     <a href="{{ path('provinces_index') }}"> Province </a>
                 {% endif %}
