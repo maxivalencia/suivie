@@ -14,20 +14,20 @@ class DossiersType extends AbstractType
         $builder
             ->add('reference')
             ->add('objet')
-            ->add('dateexpedition')
-            ->add('daterecepnumeric')
-            ->add('daterecepeffectif')
-            ->add('referencesuivie')
+            //->add('dateexpedition')
+            //->add('daterecepnumeric')
+            //->add('daterecepeffectif')
+            //->add('referencesuivie')
             ->add('dureetraitement')
-            ->add('dureeeffectif')
+            //->add('dureeeffectif')
             ->add('suggestions')
             ->add('piecejointes')
             ->add('resultat')
             ->add('typedossier')
             ->add('traitement')
-            ->add('uniteorigine')
+            //->add('uniteorigine')
             ->add('unitedestinataire')
-            ->add('precdossiers')
+            //->add('precdossiers')
         ;
     }
 

@@ -1,13 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
 {% block title %}Edit Dossiers{% endblock %}
 
-{% block body %}
-    <h1>Edit Dossiers</h1>
-
-    {{ include('dossiers/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('dossiers_index') }}">back to list</a>
-
-    {{ include('dossiers/_delete_form.html.twig') }}
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Edition Dossiers</h1>
+        </div>
+        <br>
+        {{ include('dossiers/_form.html.twig', {'button_label': 'Modifier'}) }}
+        <br>
+        <a href="{{ path('dossiers_index') }}" class="btn btn-primary">Retour</a>
+        <br><br>
+        {{ include('dossiers/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

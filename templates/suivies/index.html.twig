@@ -20,7 +20,7 @@
                 <a href="#"> Dossiers </a>
                 <a href="#"> Statistique </a>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="#"> Historique </a>
+                    <a href="{{ path('dossiers_index') }}"> Historique </a>
                     <a href="{{ path('user_index') }}"> Utilisateur </a>
                     <a href="{{ path('unites_index') }}"> Unité </a>
                     <a href="{{ path('type_dossiers_index') }}"> Type de dossiers </a>
