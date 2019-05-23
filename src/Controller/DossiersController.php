@@ -36,6 +36,13 @@ class DossiersController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $dossier->setDateexpedition(new \DateTime());
+            $dossier->setUniteorigine($this->getUser()->getUnite());
+            $daty   = new \DateTime(); //this returns the current date time
+            $results = $daty->format('Y-m-d-H-i-s');
+            $krr    = explode('-', $results);
+            $results = implode("", $krr);
+            $dossier->setReferencesuivie($results);
             $entityManager->persist($dossier);
             $entityManager->flush();
 

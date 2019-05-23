@@ -22,6 +22,7 @@
                     <th>Duree effectif</th>
                     <th>Suggestions</th>
                     <th>Piece-jointes</th>
+                    <th>Montant</th>
                     <th>actions</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@
                     <td>{{ dossier.dureeeffectif }}</td>
                     <td>{{ dossier.suggestions }}</td>
                     <td>{{ dossier.piecejointes }}</td>
+                    <td>{{ dossier.montant }}</td>
                     <td>
                         <a href="{{ path('dossiers_show', {'id': dossier.id}) }}" class="btn btn-warning"><i class="fa fa-book" aria-hidden="true"></i></a>
                         <a href="{{ path('dossiers_edit', {'id': dossier.id}) }}" class="btn btn-danger"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>

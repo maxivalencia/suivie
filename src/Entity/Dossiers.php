@@ -103,6 +103,11 @@ class Dossiers
      */
     private $dossiers;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $montant;
+
     public function __construct()
     {
         $this->dossiers = new ArrayCollection();
@@ -332,6 +337,18 @@ class Dossiers
                 $dossier->setPrecdossiers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMontant(): ?int
+    {
+        return $this->montant;
+    }
+
+    public function setMontant(?int $montant): self
+    {
+        $this->montant = $montant;
 
         return $this;
     }
