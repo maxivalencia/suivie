@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Dossiers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\Query\Expr\Orx;
 
 /**
  * @method Dossiers|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +48,24 @@ class DossiersRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
+    
+    public function findByDosFini($value1, $value2, $value3)
+    {
+        return $this->createQueryBuilder('d')
+            ->Where('d.traitement = :val1')
+            //->andWhere('d.uniteorigine = :val2 OR d.unitedestinataire = :val3')
+            ->setParameter('val1', $value1)
+            //->setParameter('val2', $value2)
+            //->setParameter('val3', $value3)
+            ->orderBy('d.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
 }

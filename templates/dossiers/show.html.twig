@@ -15,7 +15,7 @@
                     <td>{{ dossier.id }}</td>
                 </tr>
                 <tr>
-                    <th>Reference</th>
+                    <th>Reférence</th>
                     <td>{{ dossier.reference }}</td>
                 </tr>
                 <tr>
@@ -23,27 +23,27 @@
                     <td>{{ dossier.objet }}</td>
                 </tr>
                 <tr>
-                    <th>Dateexpedition</th>
+                    <th>Date d'expedition</th>
                     <td>{{ dossier.dateexpedition ? dossier.dateexpedition|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Daterecepnumeric</th>
+                    <th>Date de réception numerique</th>
                     <td>{{ dossier.daterecepnumeric ? dossier.daterecepnumeric|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Daterecepeffectif</th>
+                    <th>Date de reception effectif</th>
                     <td>{{ dossier.daterecepeffectif ? dossier.daterecepeffectif|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Referencesuivie</th>
+                    <th>Reference de suivie</th>
                     <td>{{ dossier.referencesuivie }}</td>
                 </tr>
                 <tr>
-                    <th>Dureetraitement</th>
+                    <th>Duree du traitement</th>
                     <td>{{ dossier.dureetraitement }}</td>
                 </tr>
                 <tr>
-                    <th>Dureeeffectif</th>
+                    <th>Duree effectif du traitement</th>
                     <td>{{ dossier.dureeeffectif }}</td>
                 </tr>
                 <tr>
@@ -51,8 +51,28 @@
                     <td>{{ dossier.suggestions }}</td>
                 </tr>
                 <tr>
-                    <th>Piecejointes</th>
+                    <th>Piece-jointes</th>
                     <td>{{ dossier.piecejointes }}</td>
+                </tr>
+                <tr>
+                    <th>Type de Dossier</th>
+                    <td>{{ dossier.typedossier }}</td>
+                </tr>
+                <tr>
+                    <th>Etat traitement</th>
+                    <td>{{ dossier.traitement }}</td>
+                </tr>
+                <tr>
+                    <th>Unité d'origine</th>
+                    <td>{{ dossier.uniteorigine }}</td>
+                </tr>
+                <tr>
+                    <th>Unité destinataire</th>
+                    <td>{{ dossier.unitedestinataire }}</td>
+                </tr>
+                <tr>
+                    <th>Montant</th>
+                    <td>{{ dossier.montant }}</td>
                 </tr>
             </tbody>
         </table>

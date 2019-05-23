@@ -11,17 +11,13 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Reference</th>
                     <th>Objet</th>
                     <th>expedition</th>
                     <th>reception numerique</th>
                     <th>reception effectif</th>
-                    <th>Reference suivie</th>
-                    <th>Duree traitement</th>
-                    <th>Duree effectif</th>
-                    <th>Suggestions</th>
                     <th>Piece-jointes</th>
+                    <th>Type de Dossier</th>
                     <th>Montant</th>
                     <th>actions</th>
                 </tr>
@@ -29,17 +25,13 @@
             <tbody>
             {% for dossier in dossiers %}
                 <tr>
-                    <td>{{ dossier.id }}</td>
                     <td>{{ dossier.reference }}</td>
                     <td>{{ dossier.objet }}</td>
                     <td>{{ dossier.dateexpedition ? dossier.dateexpedition|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ dossier.daterecepnumeric ? dossier.daterecepnumeric|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ dossier.daterecepeffectif ? dossier.daterecepeffectif|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ dossier.referencesuivie }}</td>
-                    <td>{{ dossier.dureetraitement }}</td>
-                    <td>{{ dossier.dureeeffectif }}</td>
-                    <td>{{ dossier.suggestions }}</td>
                     <td>{{ dossier.piecejointes }}</td>
+                    <td>{{ dossier.typedossier }}</td>
                     <td>{{ dossier.montant }}</td>
                     <td>
                         <a href="{{ path('dossiers_show', {'id': dossier.id}) }}" class="btn btn-warning"><i class="fa fa-book" aria-hidden="true"></i></a>

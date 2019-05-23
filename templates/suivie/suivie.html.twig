@@ -1,7 +1,51 @@
-{% extends 'base.html.twig' %}
+{% extends 'suivies/index.html.twig' %}
 
-{% block title %}Acceuil{% endblock %}
+{% block title %}Dossiers index{% endblock %}
 
-{% block body %}
-    Acceuil
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Liste des Dossiers terminer</h1>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Reference</th>
+                    <th>Objet</th>
+                    <th>expedition</th>
+                    <th>reception numerique</th>
+                    <th>reception effectif</th>
+                    <th>Piece-jointes</th>
+                    <th>Type de Dossier</th>
+                    <th>Montant</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for dossier in dossiers %}
+                <tr>
+                    <td>{{ dossier.reference }}</td>
+                    <td>{{ dossier.objet }}</td>
+                    <td>{{ dossier.dateexpedition ? dossier.dateexpedition|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ dossier.daterecepnumeric ? dossier.daterecepnumeric|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ dossier.daterecepeffectif ? dossier.daterecepeffectif|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ dossier.piecejointes }}</td>
+                    <td>{{ dossier.typedossier }}</td>
+                    <td>{{ dossier.montant }}</td>
+                    <td>
+                        <a href="{{ path('dossiers_show', {'id': dossier.id}) }}" class="btn btn-warning"><i class="fa fa-book" aria-hidden="true"></i></a>
+                        <a href="{{ path('dossiers_edit', {'id': dossier.id}) }}" class="btn btn-danger"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="12">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {#<a href="{{ path('dossiers_new') }}" class="btn btn-success">Créer un dossier</a>#}
+    </div>
 {% endblock %}
