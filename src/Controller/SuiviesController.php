@@ -10,14 +10,17 @@ use App\Repository\UserRepository;
 use App\Repository\DossiersRepository;
 use App\Repository\UnitesRepository;
 use App\Repository\TraitementsRepository;
+use App\Repository\ResultatsRepository;
 use App\Entity\User;
 use App\Entity\Dossiers;
 use App\Entity\Unites;
 use App\Entity\Traitements;
+use App\Entity\Resultats;
 use Symfony\Component\Validator\Constraints\DateTime;
 use App\Form\DossiersType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SuiviesController extends AbstractController
@@ -150,7 +153,7 @@ class SuiviesController extends AbstractController
     /**
      * @Route("/{id}/dossiers_affichage", name="dossiers_affichage", methods={"GET", "POST"})
      */
-    public function dossiers_affichage(TraitementsRepository $traitementsRepository, Dossiers $dossier, DossiersRepository $dossiersRepository, Request $request): Response
+    public function dossiers_affichage(TraitementsRepository $traitementsRepository, Dossiers $dossier, DossiersRepository $dossiersRepository, Request $request, ResultatsRepository $resultatsRepository): Response
     {
         $form = $this->createFormBuilder()
             ->add('Unites', EntityType::class, [
@@ -167,6 +170,26 @@ class SuiviesController extends AbstractController
                 'data' => $dossier->getId()
             ])
             ->add('Transferer', SubmitType::class, ['label' => 'Transferer'])
+            ->getForm();
+
+        $form2 = $this->createFormBuilder()
+            ->add('Unites', EntityType::class, [
+                'class' => Resultats::class,
+                'label' => 'Résultat du traitement',
+                'required' => true,
+                'attr' => [
+                    'class' => 'multi',
+                    'multiple' => false,
+                    'data-live-search' => true,
+                ],
+            ])
+            ->add('Suggestions', TextareaType::class, [
+                'label' => 'suggestion',
+            ])
+            ->add('Dossiers', HiddenType::class, [
+                'data' => $dossier->getId()
+            ])
+            ->add('Transferer', SubmitType::class, ['label' => 'Repondre'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -192,6 +215,34 @@ class SuiviesController extends AbstractController
         
             return $this->redirectToRoute('dossiers_miandry');
         }
+
+        $form2->handleRequest($request);
+
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            //$dossier1 = new Dossiers();
+            $dossier->setTraitement($traitementsRepository->findOneBy(['id' => 2]));
+            $dossier->setResultat($form->get('Resultats')->getData());
+            $entityManager->persist($dossier);
+            $entityManager->flush();
+            //$dossier2 = new Dossiers($dossier);
+            $donnee = $form->get('Dossiers')->getData();
+            $dossier2 = $dossiersRepository->findOneBy(['id' => $donnee]);
+            $dossier2 = clone $dossier;
+            $entityManager->detach($dossier2);
+            //$dossier2->setUniteorigine($dossier->getUnitedestinataire());
+            $dossier2->setUniteorigine($this->getUser()->getUnite());
+            $dossier2->setUnitedestinataire($dossier->getUniteOringe());
+            $dossier2->setResultat($form->get('Resultats')->getData());
+            $dossier2->setTraitement($traitementsRepository->findOneBy(['id' => 4]));            
+            //$entityManager->flush();
+            $entityManager->persist($dossier2);
+            $entityManager->flush();
+        
+            return $this->redirectToRoute('dossiers_miandry');
+        }
+
+        
         // date de reception numerique du dossier
         if($dossier->getDaterecepnumeric() == null){
             $entityManager = $this->getDoctrine()->getManager();
@@ -203,6 +254,7 @@ class SuiviesController extends AbstractController
         return $this->render('suivie/affichagesuivie.html.twig', [
             'dossier' => $dossier,
             'form' => $form->createView(),
+            'form2' => $form->createView(),
         ]);
     }
 
