@@ -53,19 +53,76 @@ class DossiersRepository extends ServiceEntityRepository
      * @return Dossiers[] Returns an array of Dossiers objects
      */
     
-    public function findByDosFini($value1, $value2, $value3)
+    public function findByDosFini($value1, $value2 = null, $value3 = null)
     {
         return $this->createQueryBuilder('d')
             ->Where('d.traitement = :val1')
-            //->andWhere('d.uniteorigine = :val2 OR d.unitedestinataire = :val3')
+            ->andWhere('d.uniteorigine = :val2 OR d.unitedestinataire = :val3')
+            ->groupBy('d.referencesuivie')
             ->setParameter('val1', $value1)
-            //->setParameter('val2', $value2)
-            //->setParameter('val3', $value3)
+            ->setParameter('val2', $value2)
+            ->setParameter('val3', $value3)
             ->orderBy('d.id', 'DESC')
             //->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
+
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
     
+    public function findByDosAttente($value1, $value2 = null)
+    {
+        return $this->createQueryBuilder('d')
+            ->Where('d.traitement = :val1')
+            ->andWhere('d.uniteorigine = :val2')
+            ->groupBy('d.referencesuivie')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->orderBy('d.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
+    
+    public function findByDosNonRecue($value1, $value2 = null)
+    {
+        return $this->createQueryBuilder('d')
+            ->Where('d.traitement = :val1')
+            ->andWhere('d.unitedestinataire = :val2')
+            ->groupBy('d.referencesuivie')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->orderBy('d.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
+    
+    public function findByDosEnCours($value1, $value2 = null)
+    {
+        return $this->createQueryBuilder('d')
+            ->Where('d.traitement = :val1')
+            ->andWhere('d.unitedestinataire = :val2')
+            ->groupBy('d.referencesuivie')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->orderBy('d.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }    
 }
