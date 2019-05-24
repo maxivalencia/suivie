@@ -15,6 +15,8 @@ use App\Entity\Dossiers;
 use App\Entity\Unites;
 use App\Entity\Traitements;
 use Symfony\Component\Validator\Constraints\DateTime;
+use App\Form\DossiersType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class SuiviesController extends AbstractController
 {
@@ -65,10 +67,12 @@ class SuiviesController extends AbstractController
         if($unit1 != null && $unit2 != null){
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossiersRepository->findByDosFini($traitement->getId(), $unit1->getId(), $unit2->getId()),
+                'retour' => 'dossiers_affichage',
             ]);
         }
         return $this->render('suivie/suivie.html.twig', [
             'dossiers' => $dossiersRepository->findByDosFini($traitement->getId()),
+            'retour' => 'dossiers_affichage',
         ]);
     }
     
@@ -86,10 +90,12 @@ class SuiviesController extends AbstractController
         if($unit1 != null){
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossiersRepository->findByDosAttente($traitement->getId(), $unit1->getId()),
+                'retour' => 'dossiers_affichage',
             ]);
         }
         return $this->render('suivie/suivie.html.twig', [
             'dossiers' => $dossiersRepository->findByDosAttente($traitement->getId()),
+            'retour' => 'dossiers_affichage',
         ]);
     }
     
@@ -107,10 +113,12 @@ class SuiviesController extends AbstractController
         if($unit1 != null){
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossiersRepository->findByDosNonRecue($traitement->getId(), $unit1->getId()),
+                'retour' => 'dossiers_affichage',
             ]);
         }
         return $this->render('suivie/suivie.html.twig', [
             'dossiers' => $dossiersRepository->findByDosNonRecue($traitement->getId()),
+            'retour' => 'dossiers_affichage',
         ]);
     }
     
@@ -128,10 +136,67 @@ class SuiviesController extends AbstractController
         if($unit1 != null){
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossiersRepository->findByDosEnCours($traitement->getId(), $unit1->getId()),
+                'retour' => 'dossiers_affichage',
             ]);
         }
         return $this->render('suivie/suivie.html.twig', [
             'dossiers' => $dossiersRepository->findByDosEnCours($traitement->getId()),
+            'retour' => 'dossiers_affichage',
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/dossiers_affichage", name="dossiers_affichage", methods={"GET"})
+     */
+    public function dossiers_affichage(Dossiers $dossier): Response
+    {
+        $form = $this->createFormBuilder()
+            ->add('Unites', EntityType::class, [
+                'class' => Unites::class,
+                'label' => 'Unité destinataire',
+                'required' => true,
+                'attr' => [
+                    'class' => 'multi',
+                    'multiple' => false,
+                    'data-live-search' => true,
+                ],
+            ])
+            ->add('Transferer', SubmitType::class, ['label' => 'Transferer'])
+            ->getForm();
+
+        return $this->render('suivie/affichagesuivie.html.twig', [
+            'dossier' => $dossier,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/creation", name="dossiers_creation", methods={"GET","POST"})
+     */
+    public function new(Request $request): Response
+    {
+        $dossier = new Dossiers();
+        $form = $this->createForm(DossiersType::class, $dossier);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $dossier->setDateexpedition(new \DateTime());
+            $dossier->setUniteorigine($this->getUser()->getUnite());
+            $daty   = new \DateTime(); //this returns the current date time
+            $results = $daty->format('Y-m-d-H-i-s');
+            $krr    = explode('-', $results);
+            $results = implode("", $krr);
+            $dossier->setReferencesuivie($results);
+            $entityManager->persist($dossier);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('dossiers_miandry');
+        }
+
+        return $this->render('suivie/creation.html.twig', [
+            'dossier' => $dossier,
+            'form' => $form->createView(),
         ]);
     }
 }

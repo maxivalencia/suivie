@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Dossiers;
 use App\Entity\TypeDossiers;
 use App\Entity\Unites;
+use App\Entity\Traitements;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bridge\Doctrine\Form\Type\SubmitType;
 
 class DossiersType extends AbstractType
 {
@@ -53,12 +55,21 @@ class DossiersType extends AbstractType
                     'data-live-search' => true,
                 ],
             ])
-            //->add('traitement')
-            //->add('uniteorigine') //fait
+            ->add('traitement', EntityType::class, [
+                'class' => Traitements::class,
+                'label' => 'Etat de traitement',
+                'required' => true,
+                'attr' => [
+                    'class' => 'multi',
+                    'multiple' => false,
+                    'data-live-search' => true
+                ]
+            ])
+            //->add('uniteorigine') // fait
             ->add('unitedestinataire', EntityType::class, [
                 'class' => Unites::class,
                 'label' => 'Unité destinataire',
-                'required'   => true,
+                'required' => true,
                 'attr' => [
                     'class' => 'multi',
                     'multiple' => false,

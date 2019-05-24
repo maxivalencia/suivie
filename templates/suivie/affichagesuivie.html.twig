@@ -1,0 +1,77 @@
+{% extends 'suivies/index.html.twig' %}
+
+{% block title %}Dossiers{% endblock %}
+
+{% block contenue %}
+    <div class="container">
+        <div class="text-center">
+            <h1>Dossiers</h1>
+        </div>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Reférence</th>
+                    <td>{{ dossier.reference }}</td>
+                </tr>
+                <tr>
+                    <th>Objet</th>
+                    <td>{{ dossier.objet }}</td>
+                </tr>
+                <tr>
+                    <th>Date d'expedition</th>
+                    <td>{{ dossier.dateexpedition ? dossier.dateexpedition|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de réception numerique</th>
+                    <td>{{ dossier.daterecepnumeric ? dossier.daterecepnumeric|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de reception effectif</th>
+                    <td>{{ dossier.daterecepeffectif ? dossier.daterecepeffectif|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Duree du traitement</th>
+                    <td>{{ dossier.dureetraitement }}</td>
+                </tr>
+                <tr>
+                    <th>Duree effectif du traitement</th>
+                    <td>{{ dossier.dureeeffectif }}</td>
+                </tr>
+                <tr>
+                    <th>Suggestions</th>
+                    <td>{{ dossier.suggestions }}</td>
+                </tr>
+                <tr>
+                    <th>Piece-jointes</th>
+                    <td>{{ dossier.piecejointes }}</td>
+                </tr>
+                <tr>
+                    <th>Type de Dossier</th>
+                    <td>{{ dossier.typedossier }}</td>
+                </tr>
+                <tr>
+                    <th>Etat traitement</th>
+                    <td>{{ dossier.traitement }}</td>
+                </tr>
+                <tr>
+                    <th>Unité d'origine</th>
+                    <td>{{ dossier.uniteorigine }}</td>
+                </tr>
+                <tr>
+                    <th>Unité destinataire</th>
+                    <td>{{ dossier.unitedestinataire }}</td>
+                </tr>
+                <tr>
+                    <th>Montant</th>
+                    <td>{{ dossier.montant }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        {{ form(form) }}
+        {#<a href="#" class="btn btn-primary">Transferer vers un autre unité</a>#}
+        <br><br>
+        {#<a href="{{ path('dossiers_edit', {'id': dossier.id}) }}" class="btn btn-warning">Modifier</a>#}
+    </div>
+{% endblock %}
