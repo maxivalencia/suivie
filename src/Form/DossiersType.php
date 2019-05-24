@@ -31,8 +31,8 @@ class DossiersType extends AbstractType
                 'label' => 'Objet de votre demande',
             ])
             //->add('dateexpedition') // fait
-            //->add('daterecepnumeric')
-            //->add('daterecepeffectif')
+            //->add('daterecepnumeric') // fait
+            //->add('daterecepeffectif') // fait
             //->add('referencesuivie') // fait
             ->add('dureetraitement', null, [
                 'label' => 'Durée prévue du traitement',

@@ -192,6 +192,13 @@ class SuiviesController extends AbstractController
         
             return $this->redirectToRoute('dossiers_miandry');
         }
+        // date de reception numerique du dossier
+        if($dossier->getDaterecepnumeric() == null){
+            $entityManager = $this->getDoctrine()->getManager();
+            $dossier->setDaterecepnumeric(new \DateTime());
+            $entityManager->persist($dossier);
+            $entityManager->flush();
+        }
 
         return $this->render('suivie/affichagesuivie.html.twig', [
             'dossier' => $dossier,
@@ -227,5 +234,19 @@ class SuiviesController extends AbstractController
             'dossier' => $dossier,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/reception", name="dossiers_reception", methods={"GET", "POST"})
+     */
+    public function dossiers_reception(TraitementsRepository $traitementsRepository, Dossiers $dossier, DossiersRepository $dossiersRepository, Request $request): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $dossier->setTraitement($traitementsRepository->findOneBy(['id' => 1]));
+        $dossier->setDaterecepeffectif(new \DateTime());
+        $entityManager->persist($dossier);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('dossiers_cours');
     }
 }

@@ -68,9 +68,13 @@
                 </tr>
             </tbody>
         </table>
-        <br>
-        {{ form(form) }}
-        {#<a href="#" class="btn btn-primary">Transferer vers un autre unité</a>#}
+        <br>        
+        {% if dossier.traitement == 'En cours' or dossier.traitement == 'En attente' %}
+            {{ form(form) }}
+        {% endif %}
+        {% if dossier.traitement == 'Non' %}
+            <a href="{{ path('dossiers_reception', {'id': dossier.id}) }}" class="btn btn-primary">Dossier récue</a>
+        {% endif %}
         <br><br>
         {#<a href="{{ path('dossiers_edit', {'id': dossier.id}) }}" class="btn btn-warning">Modifier</a>#}
     </div>
