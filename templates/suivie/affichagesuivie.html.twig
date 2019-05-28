@@ -69,13 +69,13 @@
             </tbody>
         </table>
         <br>        
-        {% if dossier.traitement == 'En cours' %}
+        {% if dossier.uniteorigine != app.user.unite and dossier.traitement == 'En cours' %}
             {{ form(form) }}
         {% endif %}
         {% if dossier.traitement == 'Non' %}
             <a href="{{ path('dossiers_reception', {'id': dossier.id}) }}" class="btn btn-primary">Dossier récue</a>
         {% endif %}
-        {% if dossier.traitement == 'En cours' %}
+        {% if dossier.uniteorigine != app.user.unite and dossier.traitement == 'En cours' %}
             {{ form(form2) }}
         {% endif %}
         <br><br>

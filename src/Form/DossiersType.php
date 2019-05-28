@@ -54,7 +54,7 @@ class DossiersType extends AbstractType
                     'data-live-search' => true,
                 ],
             ])
-            ->add('traitement', EntityType::class, [
+            /*->add('traitement', EntityType::class, [
                 'class' => Traitements::class,
                 'label' => 'Etat de traitement',
                 'required' => true,
@@ -63,7 +63,7 @@ class DossiersType extends AbstractType
                     'multiple' => false,
                     'data-live-search' => true
                 ]
-            ])
+            ])*/
             //->add('uniteorigine') // fait
             ->add('unitedestinataire', EntityType::class, [
                 'class' => Unites::class,
