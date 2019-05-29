@@ -320,4 +320,37 @@ class SuiviesController extends AbstractController
     
         return $this->redirectToRoute('dossiers_cours');
     }
+
+    /**
+     * @Route("/sous_unite", name="sous_unite", methods={"GET", "POST"})
+     */
+    public function sous_unite(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, Request $request, UnitesRepository $unitesRepository): Response
+    {
+        $unit1 = new Unites();
+        $unit1 = $unitesRepository->findOneBy(['id' => $this->getUser()->getUnite()]);
+        $unit2[] = new Unites();
+        $unit2 = $unitesRepository->findBy(['unitesuperieur' => $unit1]);
+        $i = 0;
+        foreach($unit2 as $unit){
+            $unit2 = $unitesRepository->findBy(['unitesuperieur' => $unit]);
+            $i++;
+        }
+        $traitement = new Traitements();
+        $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
+        $dossier[] = new Dossiers();
+        foreach($unit2 as $unit){
+            $dossier = $dossiersRepository->findByDosAttente($traitement->getId(), $unit->getId());
+        }
+        /*$entityManager = $this->getDoctrine()->getManager();
+        $dossier->setTraitement($traitementsRepository->findOneBy(['id' => 1]));
+        $dossier->setDaterecepeffectif(new \DateTime());
+        $entityManager->persist($dossier);
+        $entityManager->flush();*/
+    
+        return $this->render('suivie/suivie.html.twig', [
+            'dossiers' => $dossier,
+            'retour' => 'dossiers_affichage',
+            'titre' => 'Sous unité',
+        ]);
+    }
 }
