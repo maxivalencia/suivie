@@ -14,4 +14,18 @@ const $ = require('jquery');
 
 require('bootstrap');
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+//console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+$(function(){
+    function notification(){
+        // mise en place d'ajax pour récupérer le nombre de message recue
+        //let route = "{{ path('notif_non')|escape('js') }}"
+        $.get('127.0.0.1:8000/notif_non', function(data){
+            // Une ou plusieurs instructions
+            $('#non').innerText(data['dataResponse']);
+        });
+    
+        // mise à jout affichage
+        
+    }
+    setInterval(notification, 10000);
+});

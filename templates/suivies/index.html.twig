@@ -18,7 +18,7 @@
             <div class="vertical-menu">
                 <a href="#" class="active">Tableau de bord : {{ app.user.username }}</a>
                 <a href="{{ path('dossiers_creation') }}"> Création dossier </a>
-                <a href="{{ path('dossiers_non') }}"> Non récue </a>
+                <a href="{{ path('dossiers_non') }}"> Non récue (<span id="non">0</span>)</a>
                 <a href="{{ path('dossiers_cours') }}"> En cours</a>
                 <a href="{{ path('dossiers_miandry') }}"> En attente </a>
                 <a href="{{ path('dossiers_vita') }}"> Terminer </a>

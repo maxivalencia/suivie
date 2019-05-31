@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\UserRepository;
 use App\Repository\DossiersRepository;
 use App\Repository\UnitesRepository;
@@ -352,5 +353,24 @@ class SuiviesController extends AbstractController
             'retour' => 'dossiers_affichage',
             'titre' => 'Sous unité',
         ]);
+    }
+    
+    /**
+     * @Route("/notif_non", name="notif_non", methods={"GET"})
+     */
+    public function notif_non(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository)
+    {
+        $unit = new Unites();
+        $traitement = new Traitements();
+        $unit = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
+        $traitement = $traitementsRepository->findOneBy(['traitement' => 'Non']);
+        $numbers = $dossiersRepository->findAll(['unitedestinataire' => $unit, 'traitement' => $traitement]);
+        $dataReceive = 0;
+        foreach($numbers as $number){
+            if($number->getUnitedestinataire() == $unit && $number->getTraitement() == $traitement){
+                $dataReceive++;
+            }
+        }
+        return new JsonResponse(['numberAjax' => $number, "dataResponse" => $dataReceive]);  
     }
 }
