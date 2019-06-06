@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class DossiersType extends AbstractType
@@ -39,9 +40,10 @@ class DossiersType extends AbstractType
             ])
             //->add('dureeeffectif')
             //->add('suggestions')
-            ->add('piecejointes', TextType::class, [
+            ->add('piecejointes', FileType::class, [
                 'label' => 'Pièces-jointes',
                 'required'   => false,
+                'multiple' => true,
             ])
             //->add('resultat')
             ->add('typedossier', EntityType::class, [

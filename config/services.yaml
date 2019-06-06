@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    piece_jointe_directory: '%kernel.project_dir%/public/uploads/piecejointe'
 
 services:
     # default configuration for services in *this* file
