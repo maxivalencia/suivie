@@ -5,12 +5,53 @@
         <title>Controle et suivie - {% block title %}Bienvenue{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="/dist/images/logo_dgsr.png" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.11/uploadfile.css" rel="stylesheet">
+        <!--link rel="stylesheet" href="/dist/css/dropzone.css" /-->
         {{ encore_entry_link_tags('app') }}
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.11/jquery.uploadfile.min.js"></script>
+        <script src="/dist/js/up.js"></script>
+        <!--script src="/dist/js/dropzone.js"></script-->
         {{ encore_entry_script_tags('app') }}
+        {# <script>
+            // init,configure dropzone
+            Dropzone.autoDiscover = false;
+            var dropzone_default = new Dropzone(".dropzone", {
+                url: '{{ path('fileuploadhandler') }}' ,
+                maxFiles: 1,
+                dictMaxFilesExceeded: 'Only 1 Image can be uploaded',
+                acceptedFiles: 'image/*',
+                maxFilesize: 3,  // in Mb
+                addRemoveLinks: true,
+                init: function () {
+                    this.on("maxfilesexceeded", function(file) {
+                        this.removeFile(file);
+                    });
+                    this.on("sending", function(file, xhr, formData) {
+                        // send additional data with the file as POST data if needed.
+                        // formData.append("key", "value");  
+                    });
+                    this.on("success", function(file, response) {
+                        if (response.uploaded) 
+                            alert('File Uploaded: ' + response.fileName);
+                    });
+                }
+            });
+        </script> #}
+
+        <script>
+            $(document).ready(function(){
+                url routing = '{{ path('upload_file') }}';
+                $("#fileuploader").uploadFile({
+                    url:routing,
+                    fileName:"myfile"
+                });
+            });
+        </script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

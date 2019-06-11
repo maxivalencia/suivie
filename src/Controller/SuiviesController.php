@@ -12,16 +12,29 @@ use App\Repository\DossiersRepository;
 use App\Repository\UnitesRepository;
 use App\Repository\TraitementsRepository;
 use App\Repository\ResultatsRepository;
+use App\Repository\PiecesJointesRepository;
 use App\Entity\User;
 use App\Entity\Dossiers;
 use App\Entity\Unites;
 use App\Entity\Traitements;
 use App\Entity\Resultats;
+use App\Entity\TypeDossiers;
+use App\Entity\PiecesJointes;
 use Symfony\Component\Validator\Constraints\DateTime;
 use App\Form\DossiersType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+//use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+//use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SuiviesController extends AbstractController
@@ -282,12 +295,60 @@ class SuiviesController extends AbstractController
      */
     public function new(TraitementsRepository $traitementsRepository, Request $request): Response
     {
+        /*$form = $this->createFormBuilder()
+            ->add('reference', TextType::class, [
+                'label' => 'Reférence',
+            ])
+            ->add('objet', TextType::class, [
+                'label' => 'Objet de votre demande',
+            ])
+            ->add('dureetraitement', NumberType::class, [
+                'label' => 'Durée prévue du traitement',
+            ])
+            ->add('piecejointe', FileType::class, [
+                'label' => 'Pièces-jointes',
+                'required'   => false,
+                'multiple' => true,
+            ])
+            ->add('typedossier', EntityType::class, [
+                'class' => TypeDossiers::class,
+                'label' => 'Type de dossier',
+                'required'   => true,
+                'attr' => [
+                    'class' => 'multi',
+                    'multiple' => false,
+                    'data-live-search' => true,
+                ],
+            ])
+            ->add('unitedestinataire', EntityType::class, [
+                'class' => Unites::class,
+                'label' => 'Unité destinataire',
+                'required' => true,
+                'attr' => [
+                    'class' => 'multi',
+                    'multiple' => false,
+                    'data-live-search' => true,
+                ],
+            ])
+            ->add('montant', NumberType::class, [
+                'label' => 'Montant de l\'objet(laissez vide si inexistant)',
+            ])
+            ->add('Ajouter', SubmitType::class, [
+                'label' => 'Ajouter',
+            ])
+            ->getForm();*/
         $dossier = new Dossiers();
         $form = $this->createForm(DossiersType::class, $dossier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $dossier->setReference($form->get('dossiers')['reference']->getData());
+            $dossier->setObjet($form->get('dossiers')['objet']->getData());
+            $dossier->setDureetraitement($form->get('dossiers')['dureetraitement']->getData());
+            $dossier->setTypedossier($form->get('dossiers')['typedossier']->getData());
+            $dossier->setUnitedestinataire($form->get('dossiers')['unitedestinataire']->getData());
+            $dossier->setMontant($form->get('dossiers')['montant']->getData());
             $dossier->setDateexpedition(new \DateTime());
             $dossier->setUniteorigine($this->getUser()->getUnite());
             $dossier->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Non']));
@@ -297,7 +358,7 @@ class SuiviesController extends AbstractController
             $results = implode("", $krr);
             $dossier->setReferencesuivie($results);
             //$file = $dossier->getPiecejointes();
-            $files[] = $form->get('dossiers')['piecejointes']->getData();
+            /*$files[] = $form->get('dossiers')['piecejointe']->getData();
             $piecejointe = '';
             foreach($files as $file){
                 if($piecejointe != ''){
@@ -315,16 +376,22 @@ class SuiviesController extends AbstractController
                 }
                 $piecejointe = $piecejointe.$fileName;
             }
-            $dossier->setPiecejointes('$piecejointe');
+            $dossier->setPiecejointes('$piecejointe');*/
             $entityManager->persist($dossier);
             $entityManager->flush();
 
             return $this->redirectToRoute('dossiers_miandry');
         }
+        
+        $daty   = new \DateTime(); //this returns the current date time
+        $results = $daty->format('Y-m-d-H-i-s');
+        $krr    = explode('-', $results);
+        $results = implode("", $krr).$this->generateUniqueFileName();
 
         return $this->render('suivie/creation.html.twig', [
             'dossier' => $dossier,
             'form' => $form->createView(),
+            'refpiecejointe' => $results,
         ]);
     }
 
@@ -402,5 +469,55 @@ class SuiviesController extends AbstractController
         // md5() reduces the similarity of the file names generated by
         // uniqid(), which is based on timestamps
         return md5(uniqid());
+    }
+
+    /**
+     * @Route("/upload_file", name="upload_file", methods={"GET","POST"})
+     */
+    public function upload_file(Request $request): Response
+    {
+        $piecesJointes = new PiecesJointes(); 
+        $entityManager = $this->getDoctrine()->getManager();   
+        $file = $request->files->get('myfile');
+        $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+        $file->move(
+            $this->getParameter('piece_jointe_directory'),
+            $fileName
+        );
+        $reference = 'teste';//$request->request->get('piecejointes');
+        $daty   = new \DateTime(); //this returns the current date time
+        $results = $daty->format('Y-m-d-H-i-s');
+        $krr    = explode('-', $results);
+        $results = implode("", $krr);
+        $piecesJointes->setNomFichier(''); // mila maka an'ilay reference sy ilay vraie nom de fichier
+        $piecesJointes->setNomServer($fileName);
+        $piecesJointes->setReferencePJ($reference);
+        $entityManager->persist($piecesJointes);
+        $entityManager->flush();
+        return new JsonResponse(['filesnames' => $results]);
+            
+    }
+
+    /**
+     * @Route("/fileuploadhandler", name="fileuploadhandler")
+     */
+    public function fileUploadHandler(Request $request) {
+        $output = array('uploaded' => false);
+        // get the file from the request object
+        $file = $request->files->get('file');
+        // generate a new filename (safer, better approach)
+        // To use original filename, $fileName = $this->file->getClientOriginalName();
+        $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+     
+        // set your uploads directory
+        $uploadDir = $this->getParameter('brochures_directory');
+        if (!file_exists($uploadDir) && !is_dir($uploadDir)) {
+            mkdir($uploadDir, 0775, true);
+        }
+        if ($file->move($uploadDir, $fileName)) { 
+           $output['uploaded'] = true;
+           $output['fileName'] = $fileName;
+        }
+        return new JsonResponse($output);
     }
 }

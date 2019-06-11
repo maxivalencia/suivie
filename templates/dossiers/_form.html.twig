@@ -1,4 +1,21 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_widget(form) }}  
+    <input name="upload_file" id="upload_file" type="hidden" value="{{ path('upload_file') }}">
+    <input name="piecejointes" id="piecejointes" type="hidden" value="{{ refpiecejointe }}">
+    <div id="fileuploader">Upload</div>
     <button class="btn btn-success">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}
+
+{# <h1 class="col-sm-offset-3">File Upload</h1><hr>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <label class="col-sm-2 control-label required" for="">Default Image</label>
+        <div class="col-sm-10">
+            <div class="dropzone"></div>
+        </div>
+    </div>
+    <div class="col-xs-4 pull-right">
+        <input type="submit" class="btn btn-block btn-primary" value="Envoyer" />
+    </div>
+{{ form_end(form) }} #}

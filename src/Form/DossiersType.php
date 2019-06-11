@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class DossiersType extends AbstractType
@@ -40,11 +42,10 @@ class DossiersType extends AbstractType
             ])
             //->add('dureeeffectif')
             //->add('suggestions')
-            ->add('piecejointes', FileType::class, [
+            /*->add('piecejointes', HiddenType::class, [
                 'label' => 'Pièces-jointes',
                 'required'   => false,
-                'multiple' => true,
-            ])
+            ])*/
             //->add('resultat')
             ->add('typedossier', EntityType::class, [
                 'class' => TypeDossiers::class,
@@ -78,9 +79,12 @@ class DossiersType extends AbstractType
                 ],
             ])
             ->add('montant', null, [
-                'label' => 'Montant de l\'objet(laissez vide inexistant)',
+                'label' => 'Montant de l\'objet (laissez vide si inexistant)',
             ])
             //->add('precdossiers')
+            /*->add('Ajouter', SubmitType::class, [
+                'label' => 'Ajouter',
+            ])*/
         ;
     }
 
@@ -90,4 +94,15 @@ class DossiersType extends AbstractType
             'data_class' => Dossiers::class,
         ]);
     }
+    /*
+    public function piecesJointes(): Response
+    {
+        
+        $daty   = new \DateTime(); //this returns the current date time
+        $results = $daty->format('Y-m-d-H-i-s');
+        $krr    = explode('-', $results);
+        $results = implode("", $krr);
+        return $results;
+    }
+    */
 }

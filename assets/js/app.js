@@ -8,6 +8,8 @@
 // any CSS you require will output into a single css file (app.css in this case)
 require('../css/app.css');
 require('../css/global.scss');
+//require('../css/dropzone.scss');
+//require('../css/uploadfile.custom.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 const $ = require('jquery');
@@ -15,7 +17,7 @@ const $ = require('jquery');
 require('bootstrap');
 
 //console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
-$(function(){
+/*$(function(){
     function notification(){
         // mise en place d'ajax pour récupérer le nombre de message recue
         //let route = "{{ path('notif_non')|escape('js') }}"
@@ -28,4 +30,18 @@ $(function(){
         
     }
     setInterval(notification, 10000);
-});
+    
+    $("#fileuploader").uploadFile({
+	    url:"YOUR_FILE_UPLOAD_URL",
+	    fileName:"myfile"
+	});
+});*/
+
+
+/*$(document).ready(function()
+{
+	$("#fileuploader").uploadFile({
+	    url:"YOUR_FILE_UPLOAD_URL",
+	    fileName:"myfile"
+	});
+});*/
