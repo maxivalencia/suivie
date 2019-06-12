@@ -1,0 +1,108 @@
+{# ./templates/ct/pdfsaisie.html.twig #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Contrôles inopiné</title>
+    </head>
+    <body>
+        <table style="font-size:14px">
+            <tr>
+                <td width="300" align="center">
+                    SECRETARIAT D’ETAT AU PRES DU MINISTERE DE LA<br>
+                    DEFENSE NATIONALE CHARGE DE LA GENDARMERIE
+                    <br>--------------------------<br>
+                    DIRECTION GENERALE DE LA SECURITE ROUTIERE
+                    <br>-----------------------------<br>
+                    {{ app.user.unite.unitesuperieur }}
+                    <br>--------------------------<br>
+                    {{ app.user.unite }}
+                    <br>--------------------------<br>
+                    {{ app.user.unite.localite|upper }}<br><br>
+                    <!--img src="/dist/images/logo_dgsr.png" alt="logo" width=50px height=50px type="images/png"-->
+                    <!-- fixer l'adresse du logo après déploiment -->
+                    <img src="{{ logo }}" alt="logo" width=30px height=30px type="images/png">
+                    <br>« LAHITOKANA NY AINA »
+                </td>
+                <td width="30">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td width="200" align="center" valign="top">
+                    REPOBLIKAN’I MADAGASIKARA<br>
+                    Fitiavana-Tanindrazana-Fandrosoana
+                    <br>--------------------------<br><br>
+                    Antananarivo, le {{ "now"|localizeddate('none', 'none', 'fr', null, 'd MMMM Y') }}
+                </td>
+            </tr>
+        </table><br><br>
+        <p align="center"><u><H3>RAPPORT DE SUIVIE {{ dossier.reference }}</H3></u></p>
+        <br><br>
+        <table style="font-size:16px; margin-left:50px">
+            <tbody>
+                <tr>
+                    <th width="200">Reférence</th>
+                    <td>{{ dossier.reference }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Objet</th>
+                    <td>{{ dossier.objet }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Date d'expedition</th>
+                    <td>{{ dossier.dateexpedition ? dossier.dateexpedition|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Date de réception numerique</th>
+                    <td>{{ dossier.daterecepnumeric ? dossier.daterecepnumeric|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Date de reception effectif</th>
+                    <td>{{ dossier.daterecepeffectif ? dossier.daterecepeffectif|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Duree du traitement</th>
+                    <td>{{ dossier.dureetraitement }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Duree effectif du traitement</th>
+                    <td>{{ dossier.dureeeffectif }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Suggestions</th>
+                    <td>{{ dossier.suggestions }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Piece-jointes</th>
+                    <td>
+                        {# <a href="{{ asset('uploads/piecejointe/' ~ dossier.piecejointes) }}">{{ dossier.piecejointes }}</a> #}
+                        {% for piece in piecejointe %}
+                            {{ piece.nomFichier }}<br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th width="200">Type de Dossier</th>
+                    <td>{{ dossier.typedossier }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Etat traitement</th>
+                    <td>{{ dossier.traitement }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Unité d'origine</th>
+                    <td>{{ dossier.uniteorigine }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Unité destinataire</th>
+                    <td>{{ dossier.unitedestinataire }}</td>
+                </tr>
+                <tr>
+                    <th width="200">Montant</th>
+                    <td>{{ dossier.montant }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

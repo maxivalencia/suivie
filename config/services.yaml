@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     piece_jointe_directory: '%kernel.project_dir%/public/uploads/piecejointe'
+    image: '%kernel.project_dir%/public/images'
 
 services:
     # default configuration for services in *this* file

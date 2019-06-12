@@ -36,6 +36,8 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 //use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class SuiviesController extends AbstractController
 {
@@ -525,5 +527,30 @@ class SuiviesController extends AbstractController
            $output['fileName'] = $fileName;
         }
         return new JsonResponse($output);
+    }
+
+    /**
+     * @Route("/{id}/pdf", name="pdf", methods={"GET"})
+     */
+    public function pdf(Dossiers $dossier, PiecesJointesRepository $piecesJointesRepository): Response
+    {
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($pdfOptions);
+        $piecejointe = $piecesJointesRepository->findBy(['referencePJ' => $dossier->getPiecejointes()]);
+        $logo = $this->getParameter('image').'/logo_dgsr.png';
+        $html = $this->renderView('suivie/pdfsaisie.html.twig', [
+            'dossier' => $dossier,
+            'piecejointe' => $piecejointe,
+            'logo' => $logo,
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $fichier = $dossier->getObjet();
+        $dompdf->stream("Controle_".$fichier.".pdf", [
+            "Attachment" => true
+        ]);
+
     }
 }
