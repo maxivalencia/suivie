@@ -17,6 +17,6 @@ $(document).ready(function(){
 	$("#fileuploader").uploadFile({
 	    url:routing,
         fileName:"myfile",
-        formData:{refpiecejointe: $('#piecejointes').val()}
+        //formData:{refpiecejointe: $('#piecejointes').val()}
 	});
 });

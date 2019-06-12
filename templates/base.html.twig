@@ -43,7 +43,7 @@
             });
         </script> #}
 
-        <script>
+        {#<script>
             $(document).ready(function(){
                 url routing = '{{ path('upload_file') }}';
                 $("#fileuploader").uploadFile({
@@ -51,7 +51,7 @@
                     fileName:"myfile"
                 });
             });
-        </script>
+        </script>#}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -179,8 +179,10 @@ class SuiviesController extends AbstractController
     /**
      * @Route("/{id}/dossiers_affichage", name="dossiers_affichage", methods={"GET", "POST"})
      */
-    public function dossiers_affichage(TraitementsRepository $traitementsRepository, Dossiers $dossier, DossiersRepository $dossiersRepository, Request $request, ResultatsRepository $resultatsRepository): Response
+    public function dossiers_affichage(TraitementsRepository $traitementsRepository, Dossiers $dossier, DossiersRepository $dossiersRepository, Request $request, ResultatsRepository $resultatsRepository, PiecesJointesRepository $piecesJointesRepository): Response
     {
+        $piecejointe[] = new PiecesJointes();
+
         $form = $this->createFormBuilder()
             ->add('Unites', EntityType::class, [
                 'class' => Unites::class,
@@ -283,8 +285,10 @@ class SuiviesController extends AbstractController
             $entityManager->flush();
         }
 
+        $piecejointe = $piecesJointesRepository->findBy(['referencePJ' => $dossier->getPiecejointes()]);
         return $this->render('suivie/affichagesuivie.html.twig', [
             'dossier' => $dossier,
+            'piecejointe' => $piecejointe,
             'form' => $form->createView(),
             'form2' => $form2->createView(),
         ]);
@@ -343,12 +347,13 @@ class SuiviesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $dossier->setReference($form->get('dossiers')['reference']->getData());
-            $dossier->setObjet($form->get('dossiers')['objet']->getData());
-            $dossier->setDureetraitement($form->get('dossiers')['dureetraitement']->getData());
-            $dossier->setTypedossier($form->get('dossiers')['typedossier']->getData());
-            $dossier->setUnitedestinataire($form->get('dossiers')['unitedestinataire']->getData());
-            $dossier->setMontant($form->get('dossiers')['montant']->getData());
+            //$dossier->setReference($form->get('dossiers')['reference']->getData());
+            //$dossier->setObjet($form->get('dossiers')['objet']->getData());
+            //$dossier->setDureetraitement($form->get('dossiers')['dureetraitement']->getData());
+            //$dossier->setTypedossier($form->get('dossiers')['typedossier']->getData());
+            //$dossier->setUnitedestinataire($form->get('dossiers')['unitedestinataire']->getData());
+            //$dossier->setMontant($form->get('dossiers')['montant']->getData());
+            //$dossier->setPiecejointes($form->get('piecejointes')->getData());
             $dossier->setDateexpedition(new \DateTime());
             $dossier->setUniteorigine($this->getUser()->getUnite());
             $dossier->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Non']));
@@ -387,7 +392,8 @@ class SuiviesController extends AbstractController
         $results = $daty->format('Y-m-d-H-i-s');
         $krr    = explode('-', $results);
         $results = implode("", $krr).$this->generateUniqueFileName();
-
+        
+        $form->get('piecejointes')->setData($results);
         return $this->render('suivie/creation.html.twig', [
             'dossier' => $dossier,
             'form' => $form->createView(),
@@ -472,9 +478,9 @@ class SuiviesController extends AbstractController
     }
 
     /**
-     * @Route("/upload_file", name="upload_file", methods={"GET","POST"})
+     * @Route("/upload_file/{ref}", name="upload_file", methods={"GET","POST"})
      */
-    public function upload_file(Request $request): Response
+    public function upload_file(Request $request, $ref): Response
     {
         $piecesJointes = new PiecesJointes(); 
         $entityManager = $this->getDoctrine()->getManager();   
@@ -484,12 +490,12 @@ class SuiviesController extends AbstractController
             $this->getParameter('piece_jointe_directory'),
             $fileName
         );
-        $reference = 'teste';//$request->request->get('piecejointes');
+        $reference = $ref;//$request->request->get('piecejointes');
         $daty   = new \DateTime(); //this returns the current date time
         $results = $daty->format('Y-m-d-H-i-s');
         $krr    = explode('-', $results);
         $results = implode("", $krr);
-        $piecesJointes->setNomFichier(''); // mila maka an'ilay reference sy ilay vraie nom de fichier
+        $piecesJointes->setNomFichier($file->getClientOriginalName()); // mila maka an'ilay reference sy ilay vraie nom de fichier
         $piecesJointes->setNomServer($fileName);
         $piecesJointes->setReferencePJ($reference);
         $entityManager->persist($piecesJointes);

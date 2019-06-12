@@ -44,7 +44,12 @@
                 </tr>
                 <tr>
                     <th>Piece-jointes</th>
-                    <td><a href="{{ asset('uploads/piecejointe/' ~ dossier.piecejointes) }}">{{ dossier.piecejointes }}</a></td>
+                    <td>
+                        {# <a href="{{ asset('uploads/piecejointe/' ~ dossier.piecejointes) }}">{{ dossier.piecejointes }}</a> #}
+                        {% for piece in piecejointe %}
+                            <a href="{{ asset('uploads/piecejointe/' ~ piece.nomServer) }}">{{ piece.nomFichier }}</a><br>
+                        {% endfor %}
+                    </td>
                 </tr>
                 <tr>
                     <th>Type de Dossier</th>

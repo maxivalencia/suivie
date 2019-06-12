@@ -42,10 +42,10 @@ class DossiersType extends AbstractType
             ])
             //->add('dureeeffectif')
             //->add('suggestions')
-            /*->add('piecejointes', HiddenType::class, [
+            ->add('piecejointes', HiddenType::class, [
                 'label' => 'Pièces-jointes',
                 'required'   => false,
-            ])*/
+            ])
             //->add('resultat')
             ->add('typedossier', EntityType::class, [
                 'class' => TypeDossiers::class,
