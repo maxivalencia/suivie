@@ -16,14 +16,14 @@
     <div class="row">
         <div class="col-3 col-md-3 col-lg-3 col-xl-3">
             <div class="vertical-menu">
-                <a href="#" class="active">Tableau de bord : {{ app.user.username }}</a>
+                <a href="{{ path('suivies') }}" class="active">Tableau de bord : {{ app.user.username }}</a>
                 <a href="{{ path('dossiers_creation') }}"> Création dossier </a>
                 <a href="{{ path('dossiers_non') }}"> Non récue (<span id="non">0</span>)</a>
                 <a href="{{ path('dossiers_cours') }}"> En cours</a>
                 <a href="{{ path('dossiers_miandry') }}"> En attente </a>
                 <a href="{{ path('dossiers_vita') }}"> Terminer </a>
                 <a href="{{ path('sous_unite') }}"> Sous-Unité </a>
-                <a href="#"> Statistique </a>
+                {# <a href="#"> Statistique </a> #}
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('dossiers_index') }}"> Historique </a>
                     <a href="{{ path('user_index') }}"> Utilisateur </a>
@@ -41,7 +41,38 @@
             </div>
         </div>
         <div class="col-9 col-md-9 col-lg-9 col-xl-9">
-            <div class="row">{% block contenue %}{% endblock %}</div>
+            <div class="row">
+                {% block contenue %}
+                    <div class="container">
+                        <div class="text-center">
+                            <h1>Tableau de Bord</h1>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4 col-md-4 col-lg-4 col-xl-4 text-center" style="background-color: hsl(14, 100%, 53%);">
+                                <strong>nombre de dossier non recue <br> {{ non_recue }}</strong>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4 col-xl-4 offset-md-2 offset-2 offset-lg-2 offset-xl-2 text-center" style="background-color:red;">
+                                <strong>nombre de dossier en cours de traitement <br> {{ en_cours }}</strong>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="row">
+                            <div class="col-4 col-md-4 col-lg-4 col-xl-4 text-center" style="background-color: rgba(50, 115, 220, 0.3);">
+                                <strong>nombre de dossier en attente <br>{{ en_attente }}</strong>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4 col-xl-4 offset-md-2 offset-2 offset-lg-2 text-center" style="background-color: #05ffb0;">
+                                <strong>nombre de dossier terminer <br>{{ terminer }}</strong>
+                            </div>
+                        </div>
+                        <br><br>
+                        {# <div class="row">
+                            <div class="col-4 col-md-4 col-lg-4 col-xl-4 text-center" style="background-color: rgb(50, 115, 220);">
+                                <strong>nombre d'unité sous tutelle <br>{{ sous_unite }}</strong>
+                            </div>
+                        </div> #}            
+                    </div>
+                {% endblock %}</div>
         </div>
     </div>
     <hr>

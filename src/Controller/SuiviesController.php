@@ -44,10 +44,61 @@ class SuiviesController extends AbstractController
     /**
      * @Route("/suivies", name="suivies")
      */
-    public function index()
+    public function index(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository)
     {
+        $unit = new Unites();
+        $traitement = new Traitements();
+        $unit = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
+        $traitement = $traitementsRepository->findOneBy(['traitement' => 'Non']);
+        $numbers = $dossiersRepository->findAll(['unitedestinataire' => $unit, 'traitement' => $traitement]);
+        $dataReceive = 0;
+        foreach($numbers as $number){
+            if($number->getUnitedestinataire() == $unit && $number->getTraitement() == $traitement){
+                $dataReceive++;
+            }
+        }
+        $non_recue = $dataReceive;
+
+        $unit1 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
+        $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
+        $numbers = $dossiersRepository->findByDosEnCours($traitement->getId(), $unit1->getId());
+        $dataReceive = 0;
+        foreach($numbers as $number){
+            if($number->getUnitedestinataire() == $unit && $number->getTraitement() == $traitement){
+                $dataReceive++;
+            }
+        }
+        $en_cours = $dataReceive;
+        
+        $unit1 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
+        $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
+        $numbers = $dossiersRepository->findByDosAttente($traitement->getId(), $unit1->getId());
+        $dataReceive = 0;
+        foreach($numbers as $number){
+            if($number->getUniteorigine() == $unit && $number->getTraitement() == $traitement){
+                $dataReceive++;
+            }
+        }
+        $en_attente = $dataReceive;
+
+        $unit1 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
+        $traitement = $traitementsRepository->findOneBy(['traitement' => 'Terminer']);
+        $numbers = $dossiersRepository->findByDosEnCours($traitement->getId(), $unit1->getId());
+        $dataReceive = 0;
+        foreach($numbers as $number){
+            if($number->getUnitedestinataire() == $unit && $number->getTraitement() == $traitement){
+                $dataReceive++;
+            }
+        }
+        $terminer = $dataReceive;
+
         return $this->render('suivies/index.html.twig', [
             'controller_name' => 'SuiviesController',
+            'non_recue' => $non_recue,
+            'en_cours' => $en_cours,
+            'en_attente' => $en_attente,
+            'terminer' => $terminer,
+            'sous_unite' => 3,
         ]);
     }
 
@@ -57,7 +108,7 @@ class SuiviesController extends AbstractController
     public function rediriger(){
         if(!empty($_SESSION['username']))
         {
-            return $this->redirectToRoute('cs_suivie');
+            return $this->redirectToRoute('suivies');
         } else 
         {
             return $this->redirectToRoute('app_login');
@@ -548,7 +599,7 @@ class SuiviesController extends AbstractController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $fichier = $dossier->getObjet();
-        $dompdf->stream("Controle_".$fichier.".pdf", [
+        $dompdf->stream("Suivie_".$fichier.".pdf", [
             "Attachment" => true
         ]);
 

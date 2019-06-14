@@ -41,18 +41,21 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        #- { path: ^/user, roles: ROLE_ADMIN }
-        #- { path: ^/users, roles: ROLE_ADMIN }
-        #- { path: ^/communes, roles: ROLE_ADMIN }
-        #- { path: ^/distrits, roles: ROLE_ADMIN }
-        #- { path: ^/regions, roles: ROLE_ADMIN }
-        #- { path: ^/provinces, roles: ROLE_ADMIN }
-        #- { path: ^/dossiers, roles: ROLE_USER }
-        #- { path: ^/resultats, roles: ROLE_ADMIN }
-        #- { path: ^/traitements, roles: ROLE_ADMIN }
-        #- { path: ^/type/dossiers, roles: ROLE_ADMIN }
-        #- { path: ^/unites, roles: ROLE_ADMIN }
+        - { path: ^/user, roles: ROLE_ADMIN }
+        - { path: ^/users, roles: ROLE_ADMIN }
+        - { path: ^/communes, roles: ROLE_ADMIN }
+        - { path: ^/distrits, roles: ROLE_ADMIN }
+        - { path: ^/regions, roles: ROLE_ADMIN }
+        - { path: ^/provinces, roles: ROLE_ADMIN }
+        - { path: ^/dossiers, roles: ROLE_USER }
+        - { path: ^/resultats, roles: ROLE_ADMIN }
+        - { path: ^/traitements, roles: ROLE_ADMIN }
+        - { path: ^/type/dossiers, roles: ROLE_ADMIN }
+        - { path: ^/unites, roles: ROLE_ADMIN }
+        - { path: ^/pieces/jointes, roles: ROLE_ADMIN }
         #- { path: ^/, roles: ROLE_USER }
+        - { path: ^/suivie, roles: ROLE_USER }
+        - { path: ^/suivies, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
