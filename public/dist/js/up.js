@@ -21,5 +21,7 @@ $(document).ready(function(){
         fileName:"myfile",
         maxFileSize: 50000000,
         //formData:{refpiecejointe: $('#piecejointes').val()}
-	});
+    });
+    
+    window.onload = notification;
 });
