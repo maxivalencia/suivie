@@ -19,6 +19,7 @@ $(document).ready(function(){
 	$("#fileuploader").uploadFile({
 	    url:routing,
         fileName:"myfile",
+        maxFileSize: 50000000,
         //formData:{refpiecejointe: $('#piecejointes').val()}
 	});
 });
