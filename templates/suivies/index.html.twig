@@ -5,8 +5,8 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="col-3 col-md-3 col-lg-3 col-xl-3">
-            <!--img src="/dist/images/header.png" class="img-fluid" alt="Image en-tête de la DGSR"-->
+        <div class="col-3 col-md-3 col-lg-3 col-xl-3 text-center">
+            <img src="/dist/images/logo_dgsr.png" class="img-fluid" width="100px" heigth="100px" alt="Image en-tête de la DGSR">
         </div>
         <div class="col-9 col-md-9 col-lg-9 col-xl-9">
             <div class="font-weight-normal justify-content-center align-items-center text-center" style="font-size:30px;">Direction Général de la sécurité routière</div>
@@ -16,26 +16,26 @@
     <div class="row">
         <div class="col-3 col-md-3 col-lg-3 col-xl-3">
             <div class="vertical-menu">
-                <a href="{{ path('suivies') }}" class="active">Tableau de bord : {{ app.user.username }}</a>
-                <a href="{{ path('dossiers_creation') }}"> Création dossier </a>
-                <a href="{{ path('dossiers_non') }}"> Non récue (<span id="non">0</span>)</a>
-                <a href="{{ path('dossiers_cours') }}"> En cours</a>
-                <a href="{{ path('dossiers_miandry') }}"> En attente </a>
-                <a href="{{ path('dossiers_vita') }}"> Terminer </a>
-                <a href="{{ path('sous_unite') }}"> Sous-Unité </a>
+                <a href="{{ path('suivies') }}" class="active"><span class="fa fa-calendar-alt"></span> Tableau de bord : {{ app.user.username }}</a>
+                <a href="{{ path('dossiers_creation') }}"><span class="fa fa-user-edit"></span> Création dossier </a>
+                <a href="{{ path('dossiers_non') }}"><span class="fa fa-user-times"></span> Non récue (<span id="non">0</span>)</a>
+                <a href="{{ path('dossiers_cours') }}"><span class="fa fa-users-cog"></span> En cours</a>
+                <a href="{{ path('dossiers_miandry') }}"><span class="fa fa-user-clock"></span> En attente </a>
+                <a href="{{ path('dossiers_vita') }}"><span class="fa fa-user-check"></span> Terminer </a>
+                <a href="{{ path('sous_unite') }}"><span class="fa fa-user-friends"></span> Sous-Unité </a>
                 {# <a href="#"> Statistique </a> #}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('dossiers_index') }}"> Historique </a>
-                    <a href="{{ path('user_index') }}"> Utilisateur </a>
-                    <a href="{{ path('unites_index') }}"> Unité </a>
-                    <a href="{{ path('type_dossiers_index') }}"> Type de dossiers </a>
-                    <a href="{{ path('resultats_index') }}"> Resultat </a>
-                    <a href="{{ path('traitements_index') }}"> Traitement </a>
+                    <a href="{{ path('dossiers_index') }}"><span class="fa fa-history"></span> Historique </a>
+                    <a href="{{ path('user_index') }}"><span class="fa fa-user"></span> Utilisateur </a>
+                    <a href="{{ path('unites_index') }}"><span class="fa fa-users"></span> Unité </a>
+                    <a href="{{ path('type_dossiers_index') }}"><span class="fa fa-file"></span> Type de dossiers </a>
+                    <a href="{{ path('resultats_index') }}"><span class="fa fa-book-medical"></span> Resultat </a>
+                    <a href="{{ path('traitements_index') }}"><span class="fa fa-book"></span> Traitement </a>
                     <!--a href="#"> Role </a-->
-                    <a href="{{ path('communes_index') }}"> Commune </a>                       
-                    <a href="{{ path('districts_index') }}"> District </a>                         
-                    <a href="{{ path('regions_index') }}"> Region </a>                        
-                    <a href="{{ path('provinces_index') }}"> Province </a>
+                    <a href="{{ path('communes_index') }}"><span class="fa fa-chart-area"></span> Commune </a>                       
+                    <a href="{{ path('districts_index') }}"><span class="fa fa-chart-area"></span> District </a>                         
+                    <a href="{{ path('regions_index') }}"><span class="fa fa-chart-area"></span> Region </a>                        
+                    <a href="{{ path('provinces_index') }}"><span class="fa fa-chart-area"></span> Province </a>
                 {% endif %}
                 <!--<a href="{#{{ path('app_logout') }}#}"><span class="fa fa-sign-out"></span> Déconnexion</a>-->
             </div>
@@ -50,19 +50,19 @@
                         <hr>
                         <div class="row">
                             <div class="col-4 col-md-4 col-lg-4 col-xl-4 text-center" style="background-color: hsl(14, 100%, 53%);">
-                                <strong>nombre de dossier non recue <br> {{ non_recue }}</strong>
+                                <strong><span class="fa fa-user-times"></span><br> nombre de dossier non recue <br> {{ non_recue }}</strong>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4 col-xl-4 offset-md-2 offset-2 offset-lg-2 offset-xl-2 text-center" style="background-color:red;">
-                                <strong>nombre de dossier en cours de traitement <br> {{ en_cours }}</strong>
+                                <strong><span class="fa fa-users-cog"></span><br> nombre de dossier en cours de traitement <br> {{ en_cours }}</strong>
                             </div>
                         </div>
                         <br><br>
                         <div class="row">
-                            <div class="col-4 col-md-4 col-lg-4 col-xl-4 text-center" style="background-color: rgba(50, 115, 220, 0.3);">
-                                <strong>nombre de dossier en attente <br>{{ en_attente }}</strong>
+                            <div class="col-4 col-md-4 col-lg-4 col-xl-4 text-center" style="background-color: rgba(50, 115, 220);">
+                                <strong><span class="fa fa-user-clock"></span><br> nombre de dossier en attente <br>{{ en_attente }}</strong>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4 col-xl-4 offset-md-2 offset-2 offset-lg-2 text-center" style="background-color: #05ffb0;">
-                                <strong>nombre de dossier terminer <br>{{ terminer }}</strong>
+                                <strong><span class="fa fa-user-check"></span><br> nombre de dossier terminer <br>{{ terminer }}</strong>
                             </div>
                         </div>
                         <br><br>
@@ -77,10 +77,10 @@
     </div>
     <hr>
     <div class="row justify-content-center align-items-center text-center">
-        <span>ANDRIANTSOA Husayn Mozart (DGSR/SIT)</span>
+        <span style="font-size:10px;">ANDRIANTSOA Husayn Mozart (DGSR/SIT)</span>
     </div>
     <div class="row justify-content-center align-items-center text-center">
-        <span>Copyright © 2019 DGSR.</span>
+        <span style="font-size:10px;">Copyright © 2019 DGSR.</span>
     </div>
 </div>
 <input name="notif_non" id="notif_non" type="hidden" value='{{ path('notif_non') }}'>
