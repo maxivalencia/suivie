@@ -18,7 +18,7 @@
             <div class="vertical-menu">
                 <a href="{{ path('suivies') }}" class="active"><span class="fa fa-calendar-alt"></span> Tableau de bord : {{ app.user.username }}</a>
                 <a href="{{ path('dossiers_creation') }}"><span class="fa fa-user-edit"></span> Création dossier </a>
-                <a href="{{ path('dossiers_non') }}"><span class="fa fa-user-times"></span> Non récue (<span id="non">0</span>)</a>
+                <a href="{{ path('dossiers_non') }}"><span class="fa fa-user-times"></span> Non récue <span class="notification_count"><span id="non">0</span></span></a>
                 <a href="{{ path('dossiers_cours') }}"><span class="fa fa-users-cog"></span> En cours</a>
                 <a href="{{ path('dossiers_miandry') }}"><span class="fa fa-user-clock"></span> En attente </a>
                 <a href="{{ path('dossiers_vita') }}"><span class="fa fa-user-check"></span> Terminer </a>
@@ -50,19 +50,19 @@
                         <hr>
                         <div class="row">
                             <div class="col-4 col-md-4 col-lg-4 col-xl-4 text-center" style="background-color: hsl(14, 100%, 53%);">
-                                <strong><span class="fa fa-user-times"></span><br> nombre de dossier non recue <br> {{ non_recue }}</strong>
+                                <strong><span class="fa fa-user-times"></span><br> nombre de dossier non recue <br> ({{ non_recue }})</strong>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4 col-xl-4 offset-md-2 offset-2 offset-lg-2 offset-xl-2 text-center" style="background-color:red;">
-                                <strong><span class="fa fa-users-cog"></span><br> nombre de dossier en cours de traitement <br> {{ en_cours }}</strong>
+                                <strong><span class="fa fa-users-cog"></span><br> nombre de dossier en cours de traitement <br> ({{ en_cours }})</strong>
                             </div>
                         </div>
                         <br><br>
                         <div class="row">
                             <div class="col-4 col-md-4 col-lg-4 col-xl-4 text-center" style="background-color: rgba(50, 115, 220);">
-                                <strong><span class="fa fa-user-clock"></span><br> nombre de dossier en attente <br>{{ en_attente }}</strong>
+                                <strong><span class="fa fa-user-clock"></span><br> nombre de dossier en attente <br>({{ en_attente }})</strong>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4 col-xl-4 offset-md-2 offset-2 offset-lg-2 text-center" style="background-color: #05ffb0;">
-                                <strong><span class="fa fa-user-check"></span><br> nombre de dossier terminer <br>{{ terminer }}</strong>
+                                <strong><span class="fa fa-user-check"></span><br> nombre de dossier terminer <br>({{ terminer }})</strong>
                             </div>
                         </div>
                         <br><br>
