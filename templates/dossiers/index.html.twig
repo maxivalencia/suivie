@@ -16,7 +16,7 @@
                     <th>expedition</th>
                     <th>reception numerique</th>
                     <th>reception effectif</th>
-                    <th>Piece-jointes</th>
+                    {#<th>Piece-jointes</th>#}
                     <th>Type de Dossier</th>
                     <th>Montant</th>
                     <th>actions</th>
@@ -30,7 +30,7 @@
                     <td>{{ dossier.dateexpedition ? dossier.dateexpedition|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ dossier.daterecepnumeric ? dossier.daterecepnumeric|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ dossier.daterecepeffectif ? dossier.daterecepeffectif|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ dossier.piecejointes }}</td>
+                    {#<td>{{ dossier.piecejointes }}</td>#}
                     <td>{{ dossier.typedossier }}</td>
                     <td>{{ dossier.montant }}</td>
                     <td>
@@ -45,6 +45,10 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <div class="navigation">
+            {{ knp_pagination_render(dossiers) }}
+        </div>
 
         <a href="{{ path('dossiers_new') }}" class="btn btn-success">Créer un dossier</a>
     </div>

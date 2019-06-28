@@ -34,6 +34,10 @@
             </tbody>
         </table>
 
+        <div class="navigation">
+            {{ knp_pagination_render(resultats) }}
+        </div>
+
         <a href="{{ path('resultats_new') }}" class="btn btn-success">Créer une résultat</a>
     </div>
 {% endblock %}

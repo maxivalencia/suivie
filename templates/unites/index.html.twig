@@ -42,6 +42,10 @@
             </tbody>
         </table>
 
+        <div class="navigation">
+            {{ knp_pagination_render(unites) }}
+        </div>
+
         <a href="{{ path('unites_new') }}" class="btn btn-success">Créer un unité</a>
     </div>
 {% endblock %}

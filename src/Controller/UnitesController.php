@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+// Include paginator interface
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/unites")
  */
@@ -18,10 +21,17 @@ class UnitesController extends AbstractController
     /**
      * @Route("/", name="unites_index", methods={"GET"})
      */
-    public function index(UnitesRepository $unitesRepository): Response
+    public function index(UnitesRepository $unitesRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $dossierpaginer = $paginator->paginate(
+            $unitesRepository->findAll(),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            20
+        );
         return $this->render('unites/index.html.twig', [
-            'unites' => $unitesRepository->findAll(),
+            'unites' => $dossierpaginer,
         ]);
     }
 

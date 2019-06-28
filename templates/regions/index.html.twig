@@ -34,6 +34,10 @@
             </tbody>
         </table>
 
+        <div class="navigation">
+            {{ knp_pagination_render(regions) }}
+        </div>
+
         <a href="{{ path('regions_new') }}" class="btn btn-success">Créer une région</a>
     </div>
 {% endblock %}

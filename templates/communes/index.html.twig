@@ -34,6 +34,10 @@
             </tbody>
         </table>
 
+        <div class="navigation">
+            {{ knp_pagination_render(communes) }}
+        </div>
+
         <a href="{{ path('communes_new') }}" class="btn btn-success">Créer un commune</a>
     </div>
 {% endblock %}

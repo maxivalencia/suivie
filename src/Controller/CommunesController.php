@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+// Include paginator interface
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/communes")
  */
@@ -18,10 +21,17 @@ class CommunesController extends AbstractController
     /**
      * @Route("/", name="communes_index", methods={"GET"})
      */
-    public function index(CommunesRepository $communesRepository): Response
+    public function index(CommunesRepository $communesRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $dossierpaginer = $paginator->paginate(
+            $communesRepository->findAll(),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            20
+        );
         return $this->render('communes/index.html.twig', [
-            'communes' => $communesRepository->findAll(),
+            'communes' => $dossierpaginer,
         ]);
     }
 

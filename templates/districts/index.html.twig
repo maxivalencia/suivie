@@ -34,6 +34,10 @@
             </tbody>
         </table>
 
+        <div class="navigation">
+            {{ knp_pagination_render(districts) }}
+        </div>
+
         <a href="{{ path('districts_new') }}" class="btn btn-success">Créer un district</a>
     </div>
 {% endblock %}

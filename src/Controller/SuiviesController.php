@@ -39,6 +39,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
+// Include paginator interface
+use Knp\Component\Pager\PaginatorInterface;
+
 class SuiviesController extends AbstractController
 {
     /**
@@ -128,7 +131,7 @@ class SuiviesController extends AbstractController
     /**
      * @Route("/dossiers_fini", name="dossiers_vita", methods={"GET"})
      */
-    public function dossiers_fini(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository): Response
+    public function dossiers_fini(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $unit1 = new Unites();
         $unit2 = new Unites();
@@ -137,14 +140,28 @@ class SuiviesController extends AbstractController
         $unit2 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'Terminer']);
         if($unit1 != null && $unit2 != null){
+            $dossierpaginer = $paginator->paginate(
+                $dossiersRepository->findByDosFini($traitement->getId(), $unit1->getId()),
+                // Define the page parameter
+                $request->query->getInt('page', 1),
+                // Items per page
+                10
+            );
             return $this->render('suivie/suivie.html.twig', [
-                'dossiers' => $dossiersRepository->findByDosFini($traitement->getId(), $unit1->getId()),
+                'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
                 'titre' => 'Terminer',
             ]);
         }
+        $dossierpaginer = $paginator->paginate(
+            $dossiersRepository->findByDosFini($traitement->getId()),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            10
+        );
         return $this->render('suivie/suivie.html.twig', [
-            'dossiers' => $dossiersRepository->findByDosFini($traitement->getId()),
+            'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
             'titre' => 'Terminer',
         ]);
@@ -153,7 +170,7 @@ class SuiviesController extends AbstractController
     /**
      * @Route("/dossiers_attente", name="dossiers_miandry", methods={"GET"})
      */
-    public function dossiers_attente(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository): Response
+    public function dossiers_attente(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $unit1 = new Unites();
         $unit2 = new Unites();
@@ -164,14 +181,28 @@ class SuiviesController extends AbstractController
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
         $traitement2 = $traitementsRepository->findOneBy(['traitement' => 'Non']);
         if($unit1 != null){
+            $dossierpaginer = $paginator->paginate(
+                $dossiersRepository->findByDosAttente($traitement->getId(), $unit1->getId()),
+                // Define the page parameter
+                $request->query->getInt('page', 1),
+                // Items per page
+                10
+            );
             return $this->render('suivie/suivie.html.twig', [
-                'dossiers' => $dossiersRepository->findByDosAttente($traitement->getId(), $unit1->getId()),
+                'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
                 'titre' => 'En attente',
             ]);
         }
+        $dossierpaginer = $paginator->paginate(
+            $dossiersRepository->findByDosAttente($traitement->getId()),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            10
+        );
         return $this->render('suivie/suivie.html.twig', [
-            'dossiers' => $dossiersRepository->findByDosAttente($traitement->getId()),
+            'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
             'titre' => 'En attente',
         ]);
@@ -180,7 +211,7 @@ class SuiviesController extends AbstractController
     /**
      * @Route("/dossiers_non", name="dossiers_non", methods={"GET"})
      */
-    public function dossiers_non(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository): Response
+    public function dossiers_non(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $unit1 = new Unites();
         $unit2 = new Unites();
@@ -191,14 +222,28 @@ class SuiviesController extends AbstractController
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'Non']);
         $traitement2 = $traitementsRepository->findOneBy(['traitement' => 'En attente']);
         if($unit1 != null){
+            $dossierpaginer = $paginator->paginate(
+                $dossiersRepository->findByDosNonRecue($traitement->getId(), $unit1->getId(), $traitement2->getId()),
+                // Define the page parameter
+                $request->query->getInt('page', 1),
+                // Items per page
+                10
+            );
             return $this->render('suivie/suivie.html.twig', [
-                'dossiers' => $dossiersRepository->findByDosNonRecue($traitement->getId(), $unit1->getId(), $traitement2->getId()),
+                'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
                 'titre' => 'Non recue',
             ]);
         }
+        $dossierpaginer = $paginator->paginate(
+            $dossiersRepository->findByDosNonRecue($traitement->getId()),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            10
+        );
         return $this->render('suivie/suivie.html.twig', [
-            'dossiers' => $dossiersRepository->findByDosNonRecue($traitement->getId()),
+            'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
             'titre' => 'Non recue',
         ]);
@@ -207,7 +252,7 @@ class SuiviesController extends AbstractController
     /**
      * @Route("/dossiers_cours", name="dossiers_cours", methods={"GET"})
      */
-    public function dossiers_cours(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository): Response
+    public function dossiers_cours(TraitementsRepository $traitementsRepository, DossiersRepository $dossiersRepository, UserRepository $userRepository, UnitesRepository $unitesRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $unit1 = new Unites();
         $unit2 = new Unites();
@@ -216,14 +261,28 @@ class SuiviesController extends AbstractController
         //$unit2 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
         if($unit1 != null){
+            $dossierpaginer = $paginator->paginate(
+                $dossiersRepository->findByDosEnCours($traitement->getId(), $unit1->getId()),
+                // Define the page parameter
+                $request->query->getInt('page', 1),
+                // Items per page
+                10
+            );
             return $this->render('suivie/suivie.html.twig', [
-                'dossiers' => $dossiersRepository->findByDosEnCours($traitement->getId(), $unit1->getId()),
+                'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
                 'titre' => 'En cours de traitement',
             ]);
         }
+        $dossierpaginer = $paginator->paginate(
+            $dossiersRepository->findByDosEnCours($traitement->getId()),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            10
+        );
         return $this->render('suivie/suivie.html.twig', [
-            'dossiers' => $dossiersRepository->findByDosEnCours($traitement->getId()),
+            'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
             'titre' => 'En cours de traitement',
         ]);

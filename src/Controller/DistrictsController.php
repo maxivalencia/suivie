@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+// Include paginator interface
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/districts")
  */
@@ -18,10 +21,17 @@ class DistrictsController extends AbstractController
     /**
      * @Route("/", name="districts_index", methods={"GET"})
      */
-    public function index(DistrictsRepository $districtsRepository): Response
+    public function index(DistrictsRepository $districtsRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $dossierpaginer = $paginator->paginate(
+            $districtsRepository->findAll(),
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            20
+        );
         return $this->render('districts/index.html.twig', [
-            'districts' => $districtsRepository->findAll(),
+            'districts' => $dossierpaginer,
         ]);
     }
 

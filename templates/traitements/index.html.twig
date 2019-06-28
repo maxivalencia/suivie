@@ -34,6 +34,10 @@
             </tbody>
         </table>
 
+        <div class="navigation">
+            {{ knp_pagination_render(traitements) }}
+        </div>
+
         <a href="{{ path('traitements_new') }}" class="btn btn-success">Créer un Traitement</a>
     </div>
 {% endblock %}
