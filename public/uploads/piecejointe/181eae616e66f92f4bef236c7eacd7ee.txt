@@ -1,0 +1,8 @@
+pour les bundle de la selec2
+https://github.com/tetranz/select2entity-bundle
+
+
+
+twig
+	form_themes
+        - 'TetranzSelect2EntityBundle:Form:fields.html.twig'

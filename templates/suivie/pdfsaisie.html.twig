@@ -13,8 +13,14 @@
                     DEFENSE NATIONALE CHARGE DE LA GENDARMERIE
                     <br>--------------------------<br>
                     DIRECTION GENERALE DE LA SECURITE ROUTIERE
+                    {% if app.user.unite.unitesuperieur.unitesuperieur %}
+                    <br>-----------------------------<br>
+                    {{ app.user.unite.unitesuperieur.unitesuperieur }}
+                    {% endif %}
+                    {% if app.user.unite.unitesuperieur %}
                     <br>-----------------------------<br>
                     {{ app.user.unite.unitesuperieur }}
+                    {% endif %}
                     <br>--------------------------<br>
                     {{ app.user.unite }}
                     <br>--------------------------<br>
@@ -63,11 +69,11 @@
                 </tr>
                 <tr>
                     <th width="200">Duree du traitement</th>
-                    <td>{{ dossier.dureetraitement }}</td>
+                    <td>{{ dossier.dureetraitement }} {% if dossier.dureetraitement %}jour(s){% endif %}</td>
                 </tr>
                 <tr>
                     <th width="200">Duree effectif du traitement</th>
-                    <td>{{ dossier.dureeeffectif }}</td>
+                    <td>{{ dossier.dureeeffectif }} {% if dossier.dureeeffectif %}jour(s){% endif %}</td>
                 </tr>
                 <tr>
                     <th width="200">Suggestions</th>
@@ -100,7 +106,7 @@
                 </tr>
                 <tr>
                     <th width="200">Montant</th>
-                    <td>{{ dossier.montant }}</td>
+                    <td>Ariary {{ dossier.montant }}</td>
                 </tr>
             </tbody>
         </table>

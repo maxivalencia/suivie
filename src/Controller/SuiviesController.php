@@ -349,7 +349,8 @@ class SuiviesController extends AbstractController
             $dossier2->setUniteorigine($this->getUser()->getUnite());
             $dossier2->setUnitedestinataire($form->get('Unites')->getData());
             $dossier2->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Non']));  
-            $dossier2->setPrecdossiers($dossier);          
+            $dossier2->setPrecdossiers($dossier);
+            //$dossier2->setPrecdossiers($dossier->getId());     
             //$entityManager->flush();
             $entityManager->persist($dossier2);
             $entityManager->flush();
@@ -364,27 +365,64 @@ class SuiviesController extends AbstractController
             //$dossier1 = new Dossiers();
             $dossier->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Terminer']));
             $dossier->setResultat($form2->get('Resultats')->getData());
+            $dossier->setSuggestions($dossier->getSuggestions().' '.$form2->get('Suggestions')->getData().'.');
+            $nbjours = $dossier->getDaterecepeffectif()->diff(new \DateTime())->format("%a");
+            if($nbjours <= 0){
+                $nbjours = 1;
+            }
+            $dossier->setDureeeffectif($nbjours);
             $entityManager->persist($dossier);
             $entityManager->flush();
             //$dossier2 = new Dossiers($dossier);
-            $donnee = $form2->get('Dossiers')->getData();
-            $dossier2 = $dossiersRepository->findOneBy(['id' => $donnee]);
-            $dossier2 = clone $dossier;
-            $entityManager->detach($dossier2);
-            //$dossier2->setUniteorigine($dossier->getUnitedestinataire());
-            $dossier2->setUniteorigine($this->getUser()->getUnite());
-            $dossier2->setUnitedestinataire($dossier->getUniteorigine());
-            $resultat = $form2->get('Resultats')->getData();
-            $dossier2->setResultat($resultatsRepository->findOneBy(['id' => $resultat]));
-            $dossier2->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Non']));    
-            $dossier2->setPrecdossiers($dossier->getPrecdossiers());  
-            $dossier2->setSuggestions($dossier->getSuggestions().' '.$form2->get('Suggestions')->getData());
-            //$entityManager->flush();
-            $entityManager->persist($dossier2);
-            $dossier3 = $dossiersRepository->findOneBy(['precdossiers' => $dossier->getPrecdossiers()]);
-            $dossier3->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Terminer']));
-            $entityManager->flush();
-        
+            if($dossier->getPrecdossiers() != null){
+                $donnee = $form2->get('Dossiers')->getData();
+                $dossier2 = $dossiersRepository->findOneBy(['id' => $donnee]);
+                $dossier2 = clone $dossier;
+                $entityManager->detach($dossier2);
+                //$dossier2->setUniteorigine($dossier->getUnitedestinataire());
+                $dossier2->setUniteorigine($this->getUser()->getUnite());
+                $dossier2->setUnitedestinataire($dossier->getUniteorigine());
+                $resultat = $form2->get('Resultats')->getData();
+                $dossier2->setResultat($resultatsRepository->findOneBy(['id' => $resultat]));
+                $dossier2->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Non']));    
+                $dossier2->setPrecdossiers($dossier->getPrecdossiers()->getPrecdossiers());
+                $nbjours2 = $dossier2->getDaterecepeffectif()->diff(new \DateTime())->format("%a");
+                if($nbjours2 <= 0){
+                    $nbjours2 = 1;
+                }
+                $dossier2->setDureeeffectif($nbjours2);
+                //$dossier2->setDureeeffectif(abs((new \DateTime()) - $dossier2->getDaterecepeffectif()));
+                //$dossier3 = $dossier->getPrecdossiers();
+                //$dossier2->setSuggestions($dossier->getSuggestions().' '.$form2->get('Suggestions')->getData().'.');
+                //$entityManager->flush();
+                //$entityManager->persist($dossier2);
+                $dossier3 = $dossiersRepository->findOneBy(['precdossiers' => $dossier->getPrecdossiers()]);
+                $dossier3->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Terminer']));
+                $entityManager->persist($dossier2);
+                $entityManager->persist($dossier3);
+                $entityManager->flush();
+            } /*else {
+                $donnee = $form2->get('Dossiers')->getData();
+                $dossier2 = $dossiersRepository->findOneBy(['id' => $donnee]);
+                $dossier2 = clone $dossier;
+                $entityManager->detach($dossier2);
+                //$dossier2->setUniteorigine($dossier->getUnitedestinataire());
+                $dossier2->setUniteorigine($this->getUser()->getUnite());
+                $dossier2->setUnitedestinataire($dossier->getUniteorigine());
+                $resultat = $form2->get('Resultats')->getData();
+                $dossier2->setResultat($resultatsRepository->findOneBy(['id' => $resultat]));
+                $dossier2->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Non']));    
+                //$dossier2->setPrecdossiers($dossier->getPrecdossiers()->getPrecdossiers());
+                //$dossier3 = $dossier->getPrecdossiers();
+                //$dossier2->setSuggestions($dossier->getSuggestions().' '.$form2->get('Suggestions')->getData().'.');
+                //$entityManager->flush();
+                $entityManager->persist($dossier2);
+                $dossier3 = $dossiersRepository->findOneBy(['precdossiers' => $dossier->getPrecdossiers()]);
+                $dossier3->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Terminer']));
+                $entityManager->persist($dossier2);
+                $entityManager->persist($dossier3);
+                $entityManager->flush();                
+            }*/
             return $this->redirectToRoute('dossiers_miandry');
         }
 
@@ -396,6 +434,11 @@ class SuiviesController extends AbstractController
             $entityManager->persist($dossier);
             $entityManager->flush();
         }
+        
+        /*$daty   = new \DateTime(); //this returns the current date time
+        $results = $daty->format('Y-m-d-H-i-s');
+        $krr    = explode('-', $results);
+        $results = implode("", $krr).$this->generateUniqueFileName();*/
 
         $piecejointe = $piecesJointesRepository->findBy(['referencePJ' => $dossier->getPiecejointes()]);
         return $this->render('suivie/affichagesuivie.html.twig', [
@@ -403,6 +446,7 @@ class SuiviesController extends AbstractController
             'piecejointe' => $piecejointe,
             'form' => $form->createView(),
             'form2' => $form2->createView(),
+            //'refpiecejointe' => $results,
         ]);
     }
 

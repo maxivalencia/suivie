@@ -57,10 +57,11 @@ class DossiersRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->Where('d.traitement = :val1')
-            ->andWhere('d.unitedestinataire = :val2')
+            ->andWhere('d.unitedestinataire = :val2 or d.uniteorigine = :val3')
             //->groupBy('d.referencesuivie')
             ->setParameter('val1', $value1)
             ->setParameter('val2', $value2)
+            ->setParameter('val3', $value2)
             ->orderBy('d.id', 'DESC')
             //->setMaxResults(10)
             ->getQuery()

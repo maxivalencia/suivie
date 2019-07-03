@@ -38,7 +38,8 @@ class DossiersType extends AbstractType
             //->add('daterecepeffectif') // fait
             //->add('referencesuivie') // fait
             ->add('dureetraitement', null, [
-                'label' => 'Durée prévue du traitement',
+                'label' => 'Durée prévue du traitement [en jour(s)]',
+                'data' => 1,
             ])
             //->add('dureeeffectif')
             //->add('suggestions')
@@ -51,6 +52,7 @@ class DossiersType extends AbstractType
                 'class' => TypeDossiers::class,
                 'label' => 'Type de dossier',
                 'required'   => true,
+                'data' => false,
                 'attr' => [
                     'class' => 'multi',
                     'multiple' => false,
@@ -79,7 +81,8 @@ class DossiersType extends AbstractType
                 ],
             ])
             ->add('montant', null, [
-                'label' => 'Montant de l\'objet (laissez vide si inexistant)',
+                'label' => 'Montant de l\'objet en Ariary (laissez vide si inexistant)',
+                'data' => 0,
             ])
             //->add('precdossiers')
             /*->add('Ajouter', SubmitType::class, [
