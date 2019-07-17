@@ -7,6 +7,30 @@
         <div class="text-center">
             <h1>Liste des Dossiers {{ titre }}</h1>
         </div>
+        {% if type == 'Encours' %}
+            <form id="recherche" name="recherche" class="example" action="{{ path('dossiers_cours') }}">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        {% endif %}
+        {% if type == 'Non' %}
+            <form id="recherche" name="recherche" class="example" action="{{ path('dossiers_non') }}">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        {% endif %}
+        {% if type == 'Attente' %}
+            <form id="recherche" name="recherche" class="example" action="{{ path('dossiers_miandry') }}">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        {% endif %}
+        {% if type == 'Traiter' %}
+            <form id="recherche" name="recherche" class="example" action="{{ path('dossiers_vita') }}">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        {% endif %}
 
         <table class="table">
             <thead>

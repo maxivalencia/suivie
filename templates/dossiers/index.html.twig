@@ -6,7 +6,11 @@
     <div class="container">
         <div class="text-center">
             <h1>Liste des Dossiers</h1>
-        </div>
+        </div>        
+        <form id="recherche" name="recherche" class="example" action="{{ path('dossiers_cours') }}">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
 
         <table class="table">
             <thead>

@@ -23,13 +23,24 @@ class DossiersController extends AbstractController
      */
     public function index(DossiersRepository $dossiersRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $dossierpaginer = $paginator->paginate(
-            $dossiersRepository->findAll(),
-            // Define the page parameter
-            $request->query->getInt('page', 1),
-            // Items per page
-            20
-        );
+        $recherche = $request->query->get('search');
+        if($recherche != ''){
+            $dossierpaginer = $paginator->paginate(
+                $dossiersRepository->Trouver($recherche),
+                // Define the page parameter
+                $request->query->getInt('page', 1),
+                // Items per page
+                200
+            );
+        } else {
+            $dossierpaginer = $paginator->paginate(
+                $dossiersRepository->findAll(),
+                // Define the page parameter
+                $request->query->getInt('page', 1),
+                // Items per page
+                20
+            );
+        }
         return $this->render('dossiers/index.html.twig', [
             'dossiers' => $dossierpaginer,
         ]);

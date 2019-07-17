@@ -140,17 +140,29 @@ class SuiviesController extends AbstractController
         $unit2 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'Terminer']);
         if($unit1 != null && $unit2 != null){
-            $dossierpaginer = $paginator->paginate(
-                $dossiersRepository->findByDosFini($traitement->getId(), $unit1->getId()),
-                // Define the page parameter
-                $request->query->getInt('page', 1),
-                // Items per page
-                10
-            );
+            $recherche = $request->query->get('search');
+            if($recherche != ''){
+                $dossierpaginer = $paginator->paginate(
+                    $dossiersRepository->findByDosFiniRechercher($traitement->getId(), $unit1->getId(), $recherche),
+                    // Define the page parameter
+                    $request->query->getInt('page', 1),
+                    // Items per page
+                    100
+                );
+            } else {
+                $dossierpaginer = $paginator->paginate(
+                    $dossiersRepository->findByDosFini($traitement->getId(), $unit1->getId()),
+                    // Define the page parameter
+                    $request->query->getInt('page', 1),
+                    // Items per page
+                    10
+                );
+            }
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
                 'titre' => 'Terminer',
+                'type' => 'Traiter',
             ]);
         }
         $dossierpaginer = $paginator->paginate(
@@ -164,6 +176,7 @@ class SuiviesController extends AbstractController
             'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
             'titre' => 'Terminer',
+            'type' => 'Traiter',
         ]);
     }
     
@@ -181,18 +194,31 @@ class SuiviesController extends AbstractController
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
         $traitement2 = $traitementsRepository->findOneBy(['traitement' => 'Non']);
         if($unit1 != null){
-            $dossierpaginer = $paginator->paginate(
-                $dossiersRepository->findByDosAttente($traitement->getId(), $unit1->getId()),
-                // Define the page parameter
-                $request->query->getInt('page', 1),
-                // Items per page
-                10
-            );
+            $recherche = $request->query->get('search');
+            if($recherche != ''){
+                $dossierpaginer = $paginator->paginate(
+                    $dossiersRepository->findByDosAttenteRechercher($traitement->getId(), $unit1->getId(), $recherche),
+                    // Define the page parameter
+                    $request->query->getInt('page', 1),
+                    // Items per page
+                    100
+                );
+            } else {
+                $dossierpaginer = $paginator->paginate(
+                    $dossiersRepository->findByDosAttente($traitement->getId(), $unit1->getId()),
+                    // Define the page parameter
+                    $request->query->getInt('page', 1),
+                    // Items per page
+                    10
+                );
+            }
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
                 'titre' => 'En attente',
+                'type' => 'Attente',
             ]);
+            
         }
         $dossierpaginer = $paginator->paginate(
             $dossiersRepository->findByDosAttente($traitement->getId()),
@@ -205,6 +231,7 @@ class SuiviesController extends AbstractController
             'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
             'titre' => 'En attente',
+            'type' => 'Attente',
         ]);
     }
     
@@ -222,17 +249,29 @@ class SuiviesController extends AbstractController
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'Non']);
         $traitement2 = $traitementsRepository->findOneBy(['traitement' => 'En attente']);
         if($unit1 != null){
-            $dossierpaginer = $paginator->paginate(
-                $dossiersRepository->findByDosNonRecue($traitement->getId(), $unit1->getId(), $traitement2->getId()),
-                // Define the page parameter
-                $request->query->getInt('page', 1),
-                // Items per page
-                10
-            );
+            $recherche = $request->query->get('search');
+            if($recherche != ''){
+                $dossierpaginer = $paginator->paginate(
+                    $dossiersRepository->findByDosNonRecueRechercher($traitement->getId(), $unit1->getId(), $traitement2->getId(), $recherche),
+                    // Define the page parameter
+                    $request->query->getInt('page', 1),
+                    // Items per page
+                    100
+                );
+            } else {
+                $dossierpaginer = $paginator->paginate(
+                    $dossiersRepository->findByDosNonRecue($traitement->getId(), $unit1->getId(), $traitement2->getId()),
+                    // Define the page parameter
+                    $request->query->getInt('page', 1),
+                    // Items per page
+                    10
+                );
+            }
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
                 'titre' => 'Non recue',
+                'type' => 'Non',
             ]);
         }
         $dossierpaginer = $paginator->paginate(
@@ -246,6 +285,7 @@ class SuiviesController extends AbstractController
             'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
             'titre' => 'Non recue',
+            'type' => 'Non',
         ]);
     }
     
@@ -261,17 +301,29 @@ class SuiviesController extends AbstractController
         //$unit2 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
         if($unit1 != null){
-            $dossierpaginer = $paginator->paginate(
-                $dossiersRepository->findByDosEnCours($traitement->getId(), $unit1->getId()),
-                // Define the page parameter
-                $request->query->getInt('page', 1),
-                // Items per page
-                10
-            );
+            $recherche = $request->query->get('search');
+            if($recherche != ''){
+                $dossierpaginer = $paginator->paginate(
+                    $dossiersRepository->findByDosEnCoursRechercher($traitement->getId(), $unit1->getId(), $recherche),
+                    // Define the page parameter
+                    $request->query->getInt('page', 1),
+                    // Items per page
+                    100
+                );
+            } else {
+                $dossierpaginer = $paginator->paginate(
+                    $dossiersRepository->findByDosEnCours($traitement->getId(), $unit1->getId()),
+                    // Define the page parameter
+                    $request->query->getInt('page', 1),
+                    // Items per page
+                    10
+                );
+            }
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
                 'titre' => 'En cours de traitement',
+                'type' => 'Encours',
             ]);
         }
         $dossierpaginer = $paginator->paginate(
@@ -285,6 +337,7 @@ class SuiviesController extends AbstractController
             'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
             'titre' => 'En cours de traitement',
+            'type' => 'Encours',
         ]);
     }
 

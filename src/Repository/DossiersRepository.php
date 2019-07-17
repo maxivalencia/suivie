@@ -68,6 +68,28 @@ class DossiersRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
+    
+    public function findByDosFiniRechercher($value1, $value2 = null, $recherche = null)
+    {
+        return $this->createQueryBuilder('d')
+            ->Where('d.traitement = :val1')
+            ->andWhere('d.unitedestinataire = :val2 or d.uniteorigine = :val3')
+            ->andWhere('d.objet LIKE :val4')
+            //->groupBy('d.referencesuivie')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->setParameter('val3', $value2)
+            ->setParameter('val4', '%'.$recherche.'%')
+            ->orderBy('d.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /**
      * @return Dossiers[] Returns an array of Dossiers objects
@@ -81,6 +103,27 @@ class DossiersRepository extends ServiceEntityRepository
             //->groupBy('d.referencesuivie')
             ->setParameter('val1', $value1)
             ->setParameter('val2', $value2)
+            ->orderBy('d.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
+    
+    public function findByDosAttenteRechercher($value1, $value2 = null, $recherche = null)
+    {
+        return $this->createQueryBuilder('d')
+            ->Where('d.traitement = :val1')
+            ->andWhere('d.uniteorigine = :val2')
+            ->andWhere('d.objet LIKE :val3')
+            //->groupBy('d.referencesuivie')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->setParameter('val3', '%'.$recherche.'%')
             ->orderBy('d.id', 'DESC')
             //->setMaxResults(10)
             ->getQuery()
@@ -112,6 +155,28 @@ class DossiersRepository extends ServiceEntityRepository
      * @return Dossiers[] Returns an array of Dossiers objects
      */
     
+    public function findByDosNonRecueRechercher($value1, $value2 = null, $value3 = null, $recherche = null)
+    {
+        return $this->createQueryBuilder('d')
+            ->Where('d.traitement = :val1 or d.traitement = :val3')
+            ->andWhere('d.unitedestinataire = :val2')
+            ->andWhere('d.objet LIKE :val4')
+            //->groupBy('d.referencesuivie')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->setParameter('val3', $value3)
+            ->setParameter('val4', '%'.$recherche.'%')
+            ->orderBy('d.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
+    
     public function findByDosEnCours($value1, $value2 = null)
     {
         return $this->createQueryBuilder('d')
@@ -125,5 +190,40 @@ class DossiersRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-    }    
+    }   
+
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
+    
+    public function findByDosEnCoursRechercher($value1, $value2 = null, $recherche = null)
+    {
+        return $this->createQueryBuilder('d')
+            ->Where('d.traitement = :val1')
+            ->andWhere('d.unitedestinataire = :val2')
+            ->andWhere('d.objet LIKE :val3')
+            //->groupBy('d.referencesuivie')
+            ->setParameter('val1', $value1)
+            ->setParameter('val2', $value2)
+            ->setParameter('val3', '%'.$recherche.'%')
+            ->orderBy('d.id', 'DESC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }     
+
+    /**
+     * @return Dossiers[] Returns an array of Dossiers objects
+     */
+
+     public function Trouver($recherche){
+        return $this->createQueryBuilder('d')
+            ->Where('d.objet LIKE :val')
+            ->setParameter('val', '%'.$recherche.'%')
+            ->orderBy('d.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+     }
 }
