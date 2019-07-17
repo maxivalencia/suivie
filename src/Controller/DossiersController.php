@@ -34,7 +34,7 @@ class DossiersController extends AbstractController
             );
         } else {
             $dossierpaginer = $paginator->paginate(
-                $dossiersRepository->findAll(),
+                $dossiersRepository->findAll([],['id' => 'DESC']),
                 // Define the page parameter
                 $request->query->getInt('page', 1),
                 // Items per page
