@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    // mise en forme de la selection afin sur les selects avec recherche
+    $(".selection").select2(); 
+
+    // mise en place de la notification automatique qui augmente la valeur sans recharger la page
     function notification(){
         // mise en place d'ajax pour récupérer le nombre de message recue
         let routage = $('#notif_non').val()
@@ -12,7 +16,9 @@ $(document).ready(function(){
         // mise à jout affichage
         
     }
-	setInterval(notification, 10000);
+    setInterval(notification, 10000);
+    
+    // upload des fichiers
     //var routing = "{{ path('upload_file') }}";
     //var routing = "127.0.0.1:8000/upload_file";
     var routing = $('#upload_file').val();

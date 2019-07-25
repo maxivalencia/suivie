@@ -54,7 +54,7 @@ class DossiersType extends AbstractType
                 'required'   => true,
                 'data' => false,
                 'attr' => [
-                    'class' => 'multi',
+                    'class' => 'selection',
                     'multiple' => false,
                     'data-live-search' => true,
                 ],
