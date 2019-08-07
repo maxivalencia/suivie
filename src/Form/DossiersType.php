@@ -21,6 +21,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
+
 
 class DossiersType extends AbstractType
 {
@@ -54,7 +56,7 @@ class DossiersType extends AbstractType
                 'required'   => true,
                 'data' => false,
                 'attr' => [
-                    'class' => 'selection',
+                    'class' => 'multi',
                     'multiple' => false,
                     'data-live-search' => true,
                 ],

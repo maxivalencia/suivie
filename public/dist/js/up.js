@@ -1,11 +1,9 @@
 $(document).ready(function(){
-    // mise en forme de la selection afin sur les selects avec recherche
-    $(".selection").select2(); 
 
     // mise en place de la notification automatique qui augmente la valeur sans recharger la page
     function notification(){
         // mise en place d'ajax pour récupérer le nombre de message recue
-        let routage = $('#notif_non').val()
+        let routage = $('#notif_non').val();
         //let routage = 'http://127.0.0.1:8000/notif_non';
         $.get(routage, function(data){
             // Une ou plusieurs instructions
@@ -13,7 +11,7 @@ $(document).ready(function(){
             //alert(data['dataResponse']);
         });
     
-        // mise à jout affichage
+        // mise à jour affichage
         
     }
     setInterval(notification, 10000);
@@ -30,4 +28,8 @@ $(document).ready(function(){
     });
     
     window.onload = notification;
+
+    
+    // mise en forme de la selection afin que les selects soit avec l'option recherche
+    $(".multi").select2(); 
 });
