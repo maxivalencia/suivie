@@ -1,6 +1,6 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.27.0",
+        "@symfony/webpack-encore": "^0.28.0",
         "bootstrap": "^4.3.1",
         "core-js": "^3.0.0",
         "jquery": "^3.4.1",
@@ -16,5 +16,10 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-    }
+    },
+    "name": "suivie",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/maxivalencia/suivie",
+    "author": "kaira"
 }

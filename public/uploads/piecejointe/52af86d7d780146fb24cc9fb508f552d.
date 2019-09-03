@@ -1,0 +1,475 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.4
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  jeu. 29 août 2019 à 11:54
+-- Version du serveur :  5.7.24
+-- Version de PHP :  7.2.14
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données :  `suivie`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `communes`
+--
+
+DROP TABLE IF EXISTS `communes`;
+CREATE TABLE IF NOT EXISTS `communes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `district_id` int(11) NOT NULL,
+  `commune` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5C5EE2A5B08FA272` (`district_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `communes`
+--
+
+INSERT INTO `communes` (`id`, `district_id`, `commune`) VALUES
+(1, 1, 'IVATO');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `districts`
+--
+
+DROP TABLE IF EXISTS `districts`;
+CREATE TABLE IF NOT EXISTS `districts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `region_id` int(11) NOT NULL,
+  `district` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_68E318DC98260155` (`region_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `districts`
+--
+
+INSERT INTO `districts` (`id`, `region_id`, `district`) VALUES
+(1, 1, 'AMBOHIDRATRIMO'),
+(2, 2, 'FIANARANTSOA I');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `dossiers`
+--
+
+DROP TABLE IF EXISTS `dossiers`;
+CREATE TABLE IF NOT EXISTS `dossiers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resultat_id` int(11) DEFAULT NULL,
+  `typedossier_id` int(11) DEFAULT NULL,
+  `traitement_id` int(11) DEFAULT NULL,
+  `uniteorigine_id` int(11) DEFAULT NULL,
+  `unitedestinataire_id` int(11) DEFAULT NULL,
+  `precdossiers_id` int(11) DEFAULT NULL,
+  `reference` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `objet` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dateexpedition` datetime NOT NULL,
+  `daterecepnumeric` datetime DEFAULT NULL,
+  `daterecepeffectif` datetime DEFAULT NULL,
+  `referencesuivie` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dureetraitement` int(11) DEFAULT NULL,
+  `dureeeffectif` int(11) DEFAULT NULL,
+  `suggestions` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `piecejointes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `montant` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_A38E22E4D233E95C` (`resultat_id`),
+  KEY `IDX_A38E22E49846EC5B` (`typedossier_id`),
+  KEY `IDX_A38E22E4DDA344B6` (`traitement_id`),
+  KEY `IDX_A38E22E4C9EA1CD6` (`uniteorigine_id`),
+  KEY `IDX_A38E22E42C2BB919` (`unitedestinataire_id`),
+  KEY `IDX_A38E22E498019D12` (`precdossiers_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `dossiers`
+--
+
+INSERT INTO `dossiers` (`id`, `resultat_id`, `typedossier_id`, `traitement_id`, `uniteorigine_id`, `unitedestinataire_id`, `precdossiers_id`, `reference`, `objet`, `dateexpedition`, `daterecepnumeric`, `daterecepeffectif`, `referencesuivie`, `dureetraitement`, `dureeeffectif`, `suggestions`, `piecejointes`, `montant`) VALUES
+(36, 1, 1, 2, 1, 2, NULL, 'lkko/sdfqs/55858/2019', 'teste de terminaison de dossier', '2019-07-01 10:12:51', '2019-07-01 10:13:08', '2019-07-01 10:13:23', '20190701101251', 2, NULL, NULL, '201907011010540ec84e8967c86a81446b1bd2654beb7b', 100000),
+(37, 1, 1, 2, 1, 2, NULL, 'lkko/sdfqs/55858/2019', 'teste de terminaison de dossier', '2019-07-01 10:27:33', '2019-07-01 10:27:48', '2019-07-01 10:28:00', '20190701102733', 2, NULL, ' teste teste.', '2019070110270370d34719c8bfdb235468c9f45cad5a78', 100000),
+(38, 1, 1, 2, 2, 1, NULL, 'lkko/sdfqs/55858/2019', 'teste de terminaison de dossier', '2019-07-01 10:27:33', '2019-07-01 10:27:48', '2019-07-01 10:30:59', '20190701102733', 2, NULL, ' teste teste. teste de reception.', '2019070110270370d34719c8bfdb235468c9f45cad5a78', 100000),
+(39, 1, 1, 2, 1, 2, NULL, 'lkko/sdfqs/55858/2019', 'teste de terminaison de dossier', '2019-07-01 10:27:33', '2019-07-01 10:27:48', '2019-07-01 10:47:37', '20190701102733', 2, NULL, ' teste teste. teste de reception. fqsdfqsdf.', '2019070110270370d34719c8bfdb235468c9f45cad5a78', 100000),
+(40, NULL, 1, 1, 1, 1, NULL, 'dkmsqfdsjfklqsjd', 'demande teste', '2019-07-02 06:06:35', '2019-07-02 06:06:54', '2019-07-02 06:06:58', '20190702060635', 1, NULL, NULL, '20190702060616aaf104f3a4f7438099d1d47e912fc767', 10),
+(41, 1, 1, 2, 1, 2, NULL, 'dkmsqfdsjfklqsjd', 'demande teste', '2019-07-02 06:08:33', '2019-07-02 06:09:17', '2019-07-02 06:09:21', '20190702060833', 1, 0, ' bla bla.', '201907020607518c7e439a3600adc213dd083c3b512c93', 10),
+(42, NULL, 1, 1, 1, 1, NULL, 'mklko/85/85/lkjhg', 'demande teste', '2019-07-02 06:55:06', '2019-07-02 07:38:52', '2019-07-02 07:39:04', '20190702065506', 1, NULL, NULL, '201907020643497e7b67eac9a2f35b5075658ddc4d6dda', 0),
+(43, 1, 1, 2, 1, 2, NULL, 'mklko/85/85/lkjhg', 'demande teste', '2019-07-02 06:55:27', '2019-07-02 06:55:55', '2019-07-02 06:56:05', '20190702065527', 1, 1, ' bonne pratique.', '201907020655100597dd1a536b39348828168332d578f1', 0),
+(44, NULL, 2, 1, 2, 1, NULL, 'mklko/85/85/lkjhg', 'demande de remboursement', '2019-07-16 11:25:22', '2019-07-16 11:28:47', '2019-07-16 11:28:52', '20190716112522', 2, NULL, NULL, '20190716112502dd55e8b85acd24796c7c70917a5a113a', 0),
+(45, NULL, 2, 3, 2, 1, NULL, 'teste/teste/teste', 'teste de transfert', '2019-07-16 11:36:34', '2019-07-16 11:36:53', '2019-07-16 11:38:34', '20190716113634', 3, NULL, NULL, '20190716113545c2f12cfb6ec977be5770160c9c622ba9', 0),
+(46, NULL, 2, 1, 1, 2, 45, 'teste/teste/teste', 'teste de transfert', '2019-07-16 11:36:34', '2019-07-16 11:36:53', '2019-07-16 11:46:13', '20190716113634', 3, NULL, NULL, '20190716113545c2f12cfb6ec977be5770160c9c622ba9', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `migration_versions`
+--
+
+DROP TABLE IF EXISTS `migration_versions`;
+CREATE TABLE IF NOT EXISTS `migration_versions` (
+  `version` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `executed_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `migration_versions`
+--
+
+INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
+('20190517065227', '2019-05-17 06:52:42'),
+('20190517065902', '2019-05-17 06:59:15'),
+('20190517070334', '2019-05-17 07:03:45'),
+('20190517070615', '2019-05-17 07:06:31'),
+('20190517071559', '2019-05-17 07:16:13'),
+('20190517073109', '2019-05-17 07:32:11'),
+('20190517075707', '2019-05-17 07:57:36'),
+('20190517083258', '2019-05-17 08:33:11'),
+('20190517083618', '2019-05-17 08:36:36'),
+('20190523060010', '2019-05-23 06:00:40'),
+('20190611123623', '2019-06-11 12:36:48');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pieces_jointes`
+--
+
+DROP TABLE IF EXISTS `pieces_jointes`;
+CREATE TABLE IF NOT EXISTS `pieces_jointes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_fichier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom_server` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reference_pj` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `pieces_jointes`
+--
+
+INSERT INTO `pieces_jointes` (`id`, `nom_fichier`, `nom_server`, `reference_pj`) VALUES
+(1, 'teste', '13b185eed633e08633ee225e1326bf90.pdf', 'teste'),
+(2, 'teste', 'fbc3cf138b69fa7db2310e399cfcafd2.pdf', 'teste'),
+(3, 'C:\\wamp64\\tmp\\php3E90.tmp', '89f702ad4d583bb8857f4f3103137b5b.pdf', 'teste'),
+(4, 'controles.pdf', '09cfc86eb66b4b0e6e204eecff9e768e.pdf', '201906120526515597709fc200e1de6ae702409385096b'),
+(5, 'FEUILLE_DE_CAISSE_001_ANT_2019_05_06.pdf', 'a4b6cac735541810452fddc67c957568.pdf', '201906120526515597709fc200e1de6ae702409385096b'),
+(6, 'controles.pdf', '52393df44e994416e5d8520ef06fd0f3.pdf', '20190612053201e83e447e836d9779f2cee702e30955e1'),
+(7, 'Contrat Hébergement Cloud_VDEF_17 06 2014.pdf', '0a1b06715e2d097b4bc5f2b841a16031.pdf', '20190612053201e83e447e836d9779f2cee702e30955e1'),
+(8, '84660_ANT_001_SUR_SITE_2019.pdf', 'ae0885973f3d89fc9fe62069e93c2edd.pdf', '2019061205430206fcb4466755783eb4e47c77628b8da0'),
+(9, 'Contrat Hébergement Cloud_VDEF_17 06 2014.pdf', 'bde885db3d2abf516f14315652851dbe.pdf', '2019061205430206fcb4466755783eb4e47c77628b8da0'),
+(10, '00131701273695306461.pdf', '6053a01eac011afaceeb102d01b23fbf.pdf', '20190612060015c178e1113f73bf73f6366943d910415f'),
+(11, 'Cours-13_Pujolle.pdf', '46bbb1b521ec9e727c8fdeb0a3754d75.pdf', '20190612060015c178e1113f73bf73f6366943d910415f'),
+(12, 'DSC00527 - Copie.JPG', '6a87f7a035feba455b7182bd7265ba71.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(13, 'PTDC0444.JPG', '26b491afb7fc2772eaa566184665de71.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(14, 'PTDC0449.JPG', '55748b8f622f2a710c6d9650683ec240.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(15, 'PTDC0448.JPG', 'eb5e6435e1a2f9c220627d3991820c98.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(16, 'PTDC0446.JPG', 'dae37df7644d2d012ce7e192527dc891.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(17, 'PTDC0447.JPG', '9ee0f59a3add49e39a5d09e7e04e4516.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(18, 'PTDC0445.JPG', '1b898fdf7b47a2467d9c124181bcf652.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(19, 'PTDC0450.JPG', 'dce256a6a82be01c5baf90f8881b1fae.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(20, 'PTDC0451.JPG', '3503e929f933930d2d09485d0fc416db.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(21, 'PTDC0452.JPG', '33e113c0f178908b345f0f1c3ad9888a.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(22, 'PTDC0456.JPG', '0c05a7191b461aa26f755eccebb5fb9b.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(23, 'PTDC0458.JPG', 'c127c7de9bf75e33146405db1661b25e.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(24, 'PTDC0459.JPG', '3dbc619d3718cc0f61a371c0835f6ee0.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(25, 'PTDC0460.JPG', '20edf571dbc6f5bd9ad1604c4146bc47.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(26, 'PTDC0461.JPG', '9d91b8dc9b4db0617b5468ed7f08e18f.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(27, 'PTDC0463.JPG', 'c8e070b3ff31835a1a952af42ae88023.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(28, 'PTDC0464.JPG', '2001975c89b78f1f5279ba4d7279af29.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(29, 'PTDC0466.JPG', 'c5b560888100d468a424c54ce764fb24.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(30, 'PTDC0467.JPG', '6b6dfda5c6b5420ffd0eebc5567f4ddc.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(31, 'PTDC0468.JPG', '2e4df92512ea367a0345c021f9eeae37.jpeg', '2019061411250735448a05d89bb29dd416b7bbcd283791'),
+(32, 'DSC00493 - Copie - Copie.JPG', '070f9dd1b84523d35411ce4b6301e09c.jpeg', '201906170733206c7d06fee9e27c684f68bca8cb2521fa'),
+(33, 'DGSR SUCCESSIF.docx', 'd674dd805f7c4a78327d0d18d5ee57cf.docx', '201906170733206c7d06fee9e27c684f68bca8cb2521fa'),
+(34, '01.  ANTHROPO  EPP ANTSOROMISY.xlsx', 'c145e11b2c686f4b777070156b7a4ae3.xlsx', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(35, '01. MALAGASY EPP ANTSOROMISY.xlsx', '41d344e169e1d1435670795f8e82d04f.xlsx', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(36, '01. MATHEMATIQUE EPP ANTSOROMISY.xlsx', '2746618067cc614def10276e4f77a533.xlsx', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(37, 'Controle_1545TAB (1).pdf', 'f8ec90b9b3296f8271061c6e76bf6541.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(38, 'Controle_1545TAB.pdf', 'c198cad4d44947149aea7d6f3ddef4d0.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(39, 'Controle_1545TAB (2).pdf', '7e7e5affa6490291c5125b0efc0a459f.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(40, 'Controle_1818UB.pdf', '1b39f918d285a3b37c418d30184dc2fa.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(41, 'Controle_1818UB (1).pdf', '1ce8815ab7e41a2de4fc30426ff34709.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(42, 'Controle_demande de remboursement.pdf', 'd73d33ab30442b0c1a318c94cb1b67fe.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(43, 'Controle_demande teste (1).pdf', '388cebd45de53e734aa311deecb2cd45.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(44, 'Controle_demande teste (3).pdf', '858cd0c90439aa85d872942ba27aa33a.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(45, 'Controle_demande teste (2).pdf', 'ca8e89bf1ce5d5180f74d6bdb054e8c4.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(46, 'Controle_demande teste (4).pdf', 'c02c6980b5f24d19612bfb1d3b485498.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(47, 'Controle_demande teste (5).pdf', 'd2e68931f8770b523d26e4f16712b42d.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(48, 'Controle_demande teste.pdf', '8e2162c6fe2824ce6d19db8adda30fa6.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(49, 'Controle_demande teste (6).pdf', 'f90c70999bcdb1c878617f7372935c3d.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(50, 'Controle_demande teste (7).pdf', '58088e9233782ab6b0bde0bfa94ab44f.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(51, 'Controle_demande teste (8).pdf', 'e3d586a8dca4039bc14a369b8612fe42.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(52, 'Controle_demande teste (9).pdf', 'a050cceda102972891fe72a5a2492afe.pdf', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(53, 'Software-IPScan-EN (1).zip', 'e755d3c6535641fdf4f542907d19041b.zip', '201906170735524b65b101f5e160d73b6393b256bca66e'),
+(54, 'prise de note.txt', '181eae616e66f92f4bef236c7eacd7ee.txt', '201906280819052a700f406af22ddb5b64edc01de9ee71'),
+(55, '2018-10-25-0001.pdf', '06206afdaf67724afcc21fa80547b309.pdf', '201907011010540ec84e8967c86a81446b1bd2654beb7b'),
+(56, '2018-10-25-0003.pdf', '6573ce9d7a52b4126235352195347e9f.pdf', '201907011010540ec84e8967c86a81446b1bd2654beb7b'),
+(57, '2018-10-25-0002.pdf', '21059147e7288ee094b18352a74f5031.pdf', '201907011010540ec84e8967c86a81446b1bd2654beb7b'),
+(58, '2018-10-25-0004.pdf', 'd8c9a9a59cea9a30424fd8954bcd985e.pdf', '201907011010540ec84e8967c86a81446b1bd2654beb7b'),
+(59, '2018-10-25-0005.pdf', '7d013cbe7b9da32dfe56fab28976446c.pdf', '201907011010540ec84e8967c86a81446b1bd2654beb7b'),
+(60, 'Chrysanthemum.jpg', 'c7416b021cfdca46aebb61d5ded0c7ba.jpeg', '201907020655100597dd1a536b39348828168332d578f1'),
+(61, 'All_documents.pdf', '04cbb0082888050c3e770f84c47e545d.pdf', '20190716113545c2f12cfb6ec977be5770160c9c622ba9'),
+(62, '050.pdf', '40118caed1c216e88ffa39edbe4fcc8b.pdf', '20190716113545c2f12cfb6ec977be5770160c9c622ba9');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `provinces`
+--
+
+DROP TABLE IF EXISTS `provinces`;
+CREATE TABLE IF NOT EXISTS `provinces` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `province` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `provinces`
+--
+
+INSERT INTO `provinces` (`id`, `province`) VALUES
+(1, 'ANTANANARIVO'),
+(2, 'FIANARANTSOA');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `regions`
+--
+
+DROP TABLE IF EXISTS `regions`;
+CREATE TABLE IF NOT EXISTS `regions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `province_id` int(11) NOT NULL,
+  `region` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_A26779F3E946114A` (`province_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `regions`
+--
+
+INSERT INTO `regions` (`id`, `province_id`, `region`) VALUES
+(1, 1, 'ANALAMANGA'),
+(2, 2, 'MATSITRA AMBONY');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `resultats`
+--
+
+DROP TABLE IF EXISTS `resultats`;
+CREATE TABLE IF NOT EXISTS `resultats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resultat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `resultats`
+--
+
+INSERT INTO `resultats` (`id`, `resultat`) VALUES
+(1, 'Terminer'),
+(2, 'Echec'),
+(3, 'En attente');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `traitements`
+--
+
+DROP TABLE IF EXISTS `traitements`;
+CREATE TABLE IF NOT EXISTS `traitements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `traitement` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `traitements`
+--
+
+INSERT INTO `traitements` (`id`, `traitement`) VALUES
+(1, 'En cours'),
+(2, 'Terminer'),
+(3, 'En attente'),
+(4, 'Non'),
+(5, 'Retour');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `type_dossiers`
+--
+
+DROP TABLE IF EXISTS `type_dossiers`;
+CREATE TABLE IF NOT EXISTS `type_dossiers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `type_dossiers`
+--
+
+INSERT INTO `type_dossiers` (`id`, `type`) VALUES
+(1, 'demande de remboursement'),
+(2, 'Demande imprimées administratives');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `unites`
+--
+
+DROP TABLE IF EXISTS `unites`;
+CREATE TABLE IF NOT EXISTS `unites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `commune_id` int(11) NOT NULL,
+  `unitesuperieur_id` int(11) DEFAULT NULL,
+  `unite` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abreviation` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `localite` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_87F339C131A4F72` (`commune_id`),
+  KEY `IDX_87F339C691F598F` (`unitesuperieur_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `unites`
+--
+
+INSERT INTO `unites` (`id`, `commune_id`, `unitesuperieur_id`, `unite`, `abreviation`, `localite`, `mail`, `phone`) VALUES
+(1, 1, 2, 'CENTRE DE  SECURITE ROUTIERE IVATO', 'IVT', 'cfs ivato', 'censeroivato@gmail.com', '0333303333'),
+(2, 1, 1, 'CENTRE DE SECURITE ROUTIERE ANTANANARIVO', 'TNA', 'ALAROBIA – BP.784', 'qmlksdjfkqsf', 'dkqfsjmdlf');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` json NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unite_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`),
+  KEY `IDX_8D93D649EC4A74AB` (`unite_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `roles`, `password`, `unite_id`) VALUES
+(1, 'superadmin@cs.mg', '[\"ROLE_SUPERADMIN\"]', '$2y$13$vW35kJhhVrPLm3ws1Xb4EeNTdRARECJn8IBaQtd5trADNT2Oh9/M2', 1),
+(2, 'teste', '[]', '$2y$13$Y9ZIOsBNV53r.XpWmkm06elmnX4OaS83f45ZBivifo7FUfQanw3fu', 1),
+(3, 'teste1', '[]', '$2y$13$CAK1hGfbOKIYL2ew1xyaaeKZMwOe.UsbaqQucRv5DBUSkFmshiDMG', 2),
+(4, 'teste2', '[]', '$2y$13$HoTRke4kXCSQe/28cDxphOzJqn4rgQPYU.Xkl6nqyEw7CRIzurZGO', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unite_id` int(11) NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` json NOT NULL COMMENT '(DC2Type:json_array)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_1483A5E9EC4A74AB` (`unite_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `communes`
+--
+ALTER TABLE `communes`
+  ADD CONSTRAINT `FK_5C5EE2A5B08FA272` FOREIGN KEY (`district_id`) REFERENCES `districts` (`id`);
+
+--
+-- Contraintes pour la table `districts`
+--
+ALTER TABLE `districts`
+  ADD CONSTRAINT `FK_68E318DC98260155` FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`);
+
+--
+-- Contraintes pour la table `dossiers`
+--
+ALTER TABLE `dossiers`
+  ADD CONSTRAINT `FK_A38E22E42C2BB919` FOREIGN KEY (`unitedestinataire_id`) REFERENCES `unites` (`id`),
+  ADD CONSTRAINT `FK_A38E22E498019D12` FOREIGN KEY (`precdossiers_id`) REFERENCES `dossiers` (`id`),
+  ADD CONSTRAINT `FK_A38E22E49846EC5B` FOREIGN KEY (`typedossier_id`) REFERENCES `type_dossiers` (`id`),
+  ADD CONSTRAINT `FK_A38E22E4C9EA1CD6` FOREIGN KEY (`uniteorigine_id`) REFERENCES `unites` (`id`),
+  ADD CONSTRAINT `FK_A38E22E4D233E95C` FOREIGN KEY (`resultat_id`) REFERENCES `resultats` (`id`),
+  ADD CONSTRAINT `FK_A38E22E4DDA344B6` FOREIGN KEY (`traitement_id`) REFERENCES `traitements` (`id`);
+
+--
+-- Contraintes pour la table `regions`
+--
+ALTER TABLE `regions`
+  ADD CONSTRAINT `FK_A26779F3E946114A` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`);
+
+--
+-- Contraintes pour la table `unites`
+--
+ALTER TABLE `unites`
+  ADD CONSTRAINT `FK_87F339C131A4F72` FOREIGN KEY (`commune_id`) REFERENCES `communes` (`id`),
+  ADD CONSTRAINT `FK_87F339C691F598F` FOREIGN KEY (`unitesuperieur_id`) REFERENCES `unites` (`id`);
+
+--
+-- Contraintes pour la table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `FK_8D93D649EC4A74AB` FOREIGN KEY (`unite_id`) REFERENCES `unites` (`id`);
+
+--
+-- Contraintes pour la table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `FK_1483A5E9EC4A74AB` FOREIGN KEY (`unite_id`) REFERENCES `unites` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
