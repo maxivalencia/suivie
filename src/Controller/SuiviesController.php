@@ -654,6 +654,7 @@ class SuiviesController extends AbstractController
             'dossiers' => $dossier,
             'retour' => 'dossiers_affichage',
             'titre' => 'Sous unité',
+            'type' => 'rien',
         ]);
     }
     
