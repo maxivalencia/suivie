@@ -191,7 +191,7 @@ class SuiviesController extends AbstractController
         $traitement2 = new Traitements();
         $unit1 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         //$unit2 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
-        $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
+        $traitement = $traitementsRepository->findOneBy(['traitement' => 'En attente']);
         $traitement2 = $traitementsRepository->findOneBy(['traitement' => 'Non']);
         if($unit1 != null){
             $recherche = $request->query->get('search');
@@ -427,7 +427,7 @@ class SuiviesController extends AbstractController
             $entityManager->persist($dossier);
             $entityManager->flush();
             //$dossier2 = new Dossiers($dossier);
-            if($dossier->getPrecdossiers() != null){
+            /* if($dossier->getPrecdossiers() != null){
                 $donnee = $form2->get('Dossiers')->getData();
                 $dossier2 = $dossiersRepository->findOneBy(['id' => $donnee]);
                 $dossier2 = clone $dossier;
@@ -454,7 +454,7 @@ class SuiviesController extends AbstractController
                 $entityManager->persist($dossier2);
                 $entityManager->persist($dossier3);
                 $entityManager->flush();
-            } /*else {
+            } */ /*else {
                 $donnee = $form2->get('Dossiers')->getData();
                 $dossier2 = $dossiersRepository->findOneBy(['id' => $donnee]);
                 $dossier2 = clone $dossier;
