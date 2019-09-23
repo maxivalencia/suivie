@@ -192,7 +192,7 @@ class SuiviesController extends AbstractController
         $unit1 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         //$unit2 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'En attente']);
-        $traitement2 = $traitementsRepository->findOneBy(['traitement' => 'Non']);
+        //$traitement2 = $traitementsRepository->findOneBy(['traitement' => 'Non']);
         if($unit1 != null){
             $recherche = $request->query->get('search');
             if($recherche != ''){
@@ -215,7 +215,7 @@ class SuiviesController extends AbstractController
             return $this->render('suivie/suivie.html.twig', [
                 'dossiers' => $dossierpaginer,
                 'retour' => 'dossiers_affichage',
-                'titre' => 'En attente',
+                'titre' => 'Transferer',
                 'type' => 'Attente',
             ]);
             
@@ -230,7 +230,7 @@ class SuiviesController extends AbstractController
         return $this->render('suivie/suivie.html.twig', [
             'dossiers' => $dossierpaginer,
             'retour' => 'dossiers_affichage',
-            'titre' => 'En attente',
+            'titre' => 'Transferer',
             'type' => 'Attente',
         ]);
     }
@@ -247,7 +247,7 @@ class SuiviesController extends AbstractController
         $unit1 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         //$unit2 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
         $traitement = $traitementsRepository->findOneBy(['traitement' => 'Non']);
-        $traitement2 = $traitementsRepository->findOneBy(['traitement' => 'En attente']);
+        //$traitement2 = $traitementsRepository->findOneBy(['traitement' => 'En attente']);
         if($unit1 != null){
             $recherche = $request->query->get('search');
             if($recherche != ''){
@@ -389,22 +389,17 @@ class SuiviesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            //$dossier1 = new Dossiers();
             $dossier->setTraitement($traitementsRepository->findOneBy(['traitement' => 'En attente']));
             $entityManager->persist($dossier);
             $entityManager->flush();
-            //$dossier2 = new Dossiers($dossier);
             $donnee = $form->get('Dossiers')->getData();
-            $dossier2 = $dossiersRepository->findOneBy(['id' => $donnee]);
+            //$dossier2 = $dossiersRepository->findOneBy(['id' => $donnee]);
             $dossier2 = clone $dossier;
             $entityManager->detach($dossier2);
-            //$dossier2->setUniteorigine($dossier->getUnitedestinataire());
             $dossier2->setUniteorigine($this->getUser()->getUnite());
             $dossier2->setUnitedestinataire($form->get('Unites')->getData());
             $dossier2->setTraitement($traitementsRepository->findOneBy(['traitement' => 'Non']));  
             $dossier2->setPrecdossiers($dossier);
-            //$dossier2->setPrecdossiers($dossier->getId());     
-            //$entityManager->flush();
             $entityManager->persist($dossier2);
             $entityManager->flush();
         

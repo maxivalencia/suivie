@@ -136,14 +136,14 @@ class DossiersRepository extends ServiceEntityRepository
      * @return Dossiers[] Returns an array of Dossiers objects
      */
     
-    public function findByDosNonRecue($value1, $value2 = null, $value3 = null)
+    public function findByDosNonRecue($value1, $value2 = null)
     {
         return $this->createQueryBuilder('d')
-            ->Where('d.traitement = :val1 or d.traitement = :val3')
+            ->Where('d.traitement = :val1')
             ->andWhere('d.unitedestinataire = :val2')
             ->setParameter('val1', $value1)
             ->setParameter('val2', $value2)
-            ->setParameter('val3', $value3)
+            //->setParameter('val3', $value3)
             ->orderBy('d.id', 'DESC')
             ->getQuery()
             ->getResult()
@@ -158,12 +158,12 @@ class DossiersRepository extends ServiceEntityRepository
     {
         $myDateTime = new DateTime($recherche);
         return $this->createQueryBuilder('d')
-            ->Where('d.traitement = :val1 or d.traitement = :val3')
+            ->Where('d.traitement = :val1')
             ->andWhere('d.unitedestinataire = :val2')
             ->andWhere('d.objet LIKE :val4 OR d.daterecepeffectif BETWEEN  :val5 AND :val6')
             ->setParameter('val1', $value1)
             ->setParameter('val2', $value2)
-            ->setParameter('val3', $value3)
+            //->setParameter('val3', $value3)
             ->setParameter('val4', '%'.$recherche.'%')
             ->setParameter('val5', date_create($recherche.' 00:00:00'))
             ->setParameter('val6', date_create($recherche.' 23:59:59'))
@@ -177,7 +177,7 @@ class DossiersRepository extends ServiceEntityRepository
      * @return Dossiers[] Returns an array of Dossiers objects
      */
     
-    public function findByDosEnCours($value1, $value2 = null)
+    public function findByDosEnCours($value1, $value2)
     {
         return $this->createQueryBuilder('d')
             ->Where('d.traitement = :val1')
