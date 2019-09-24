@@ -74,7 +74,7 @@ class SuiviesController extends AbstractController
         $en_cours = $dataReceive;
         
         $unit1 = $unitesRepository->findOneById(['id' => $this->getUser()->getUnite()]);
-        $traitement = $traitementsRepository->findOneBy(['traitement' => 'En cours']);
+        $traitement = $traitementsRepository->findOneBy(['traitement' => 'En attente']);
         $numbers = $dossiersRepository->findByDosAttente($traitement->getId(), $unit1->getId());
         $dataReceive = 0;
         foreach($numbers as $number){
